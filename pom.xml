@@ -27,25 +27,47 @@
     <version>0.1.0</version>
 
     <packaging>pom</packaging>
-    <name>Zepben Evolve Super Pom</name>
-    <description>Zepben Evolve super pom for Maven projects</description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Super Pom for Evolve Maven projects. Used for version management within the evolve platform.</description>
+    <url>https://bitbucket.org/zepben/evolve-super-pom/</url>
     <organization>
         <name>Zeppelin Bend Pty Ltd.</name>
         <url>https://zepben.com</url>
     </organization>
 
-    <distributionManagement>
-        <repository>
-            <id>zepben-maven</id>
-            <name>Zepben Releases</name>
-            <url>${releases.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>zepben-maven</id>
-            <name>Zepben Snapshots</name>
-            <url>${snapshots.url}</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License v3</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Anthony Charlton</name>
+            <email>anthony.charlton@zepben.com</email>
+            <organization>Zeppelin Bend</organization>
+            <organizationUrl>https://zepben.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Glenn Carwardine</name>
+            <email>glenn.carwardine@zepben.com</email>
+            <organization>Zeppelin Bend</organization>
+            <organizationUrl>https://zepben.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Kurt Greaves</name>
+            <email>kurt.greaves@zepben.com</email>
+            <organization>Zeppelin Bend</organization>
+            <organizationUrl>https://zepben.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://bitbucket.org/zepben/evolve-super-pom.git</connection>
+        <developerConnection>scm:git:ssh://bitbucket.org/zepben/evolve-super-pom.git</developerConnection>
+        <url>https://bitbucket.org/zepben/evolve-super-pom/src</url>
+    </scm>
 
     <properties>
         <jdk.version>1.8</jdk.version>
