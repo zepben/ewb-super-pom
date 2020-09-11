@@ -1,0 +1,56 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "maven:3.6.3-amazoncorretto-11",
+            "commit": "true"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "../deps-pom.xml",
+            "destination": "/root/deps-pom.xml"
+        },
+        {
+            "type": "file",
+            "source": "../pom.xml",
+            "destination": "/root/pom.xml"
+        },
+        {
+            "type": "file",
+            "source": "src/",
+            "destination": "/root/src/"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "yum install -y git",
+                "cd /root",
+                "mvn install -f pom.xml",
+                "mvn dependency:go-offline -f deps-pom.xml",
+                "mkdir -p src/main/java",
+                "mvn clean verify -f deps-pom.xml",
+                "rm -rf target",
+                "rm -rf src",
+                "rm -f *.xml",
+                "mv -f .m2/repository local_repo"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "maven-settings.xml",
+            "destination": "/root/.m2/settings.xml"
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-tag",
+                "repository": "zepben/pipeline-java",
+                "tag": "latest"
+            },
+            "docker-push"
+        ]
+    ]
+ }

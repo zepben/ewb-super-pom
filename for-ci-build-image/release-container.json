@@ -1,0 +1,29 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "zepben/pipeline-java",
+            "commit": "true"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "yum install -y git",
+                "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+                "yum install -y xmlstarlet"
+            ]
+        }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-tag",
+                "repository": "zepben/release-pipeline-java",
+                "tag": "latest"
+            },
+            "docker-push"
+        ]
+    ]
+ }
