@@ -1,5 +1,5 @@
 ####################################################PIPELINE MENU####################################################
-# branch - master:
+# branch - main:
 # * Deploys super pom to Nexus
 #
 # pull requests:
@@ -18,7 +18,7 @@ options:
 
 pipelines:
   branches:
-    master: 
+    main: 
       - step:
           <<: *zep-basic-image 
           name: Check and tag version

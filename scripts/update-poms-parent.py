@@ -70,7 +70,7 @@ class ProcessRepo:
         repo_name = self.repo.name
 
         try:
-            cmd = ["git", "clone", self.repo.cloneref + "/master", git_dir]
+            cmd = ["git", "clone", self.repo.cloneref + "/main", git_dir]
             self._run_fatal_cmd(cmd, repo_name, UpdateVersionError.Type.GIT_ERROR)
 
             cmd = ["mvn", "-f", pom_path, "versions:update-parent", "-DallowSnapshots=true",
@@ -175,7 +175,7 @@ class PomParentVersionUpdater:
             print(msg)
 
     def _is_maven_repo(self, repo: Repo) -> bool:
-        url = repo.srcref + "/master/pom.xml"
+        url = repo.srcref + "/main/pom.xml"
         response = requests.get(url, auth=self.auth)
         return response.status_code == 200
 
