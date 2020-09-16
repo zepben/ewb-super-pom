@@ -16,15 +16,15 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with evolve-super-pom.  If not, see <https://www.gnu.org/licenses/>.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/pom/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/xmlschema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.1.0</version>
+    <version>0.1.4</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>

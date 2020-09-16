@@ -35,7 +35,8 @@ pipelines:
             - maven
           script:
             - curl --user $BB_AUTH_STRING $MAVEN_SETTINGS -o maven-settings.xml
-            - mvn clean deploy -f pom.xml -s maven-settings.xml -Dserver.username=$NEXUS_USERNAME -Dserver.password=$NEXUS_PASSWORD -Dserver.repo.url=$NEXUS_MAVEN_REPO -Dserver.release.url=$NEXUS_MAVEN_RELEASE -Dserver.snapshot.url=$NEXUS_MAVEN_SNAPSHOT
+            - mvn package
+#            - mvn clean deploy -f pom.xml -s maven-settings.xml -Dserver.username=$NEXUS_USERNAME -Dserver.password=$NEXUS_PASSWORD -Dserver.repo.url=$NEXUS_MAVEN_REPO -Dserver.release.url=$NEXUS_MAVEN_RELEASE -Dserver.snapshot.url=$NEXUS_MAVEN_SNAPSHOT
       - step: 
           image: hashicorp/packer
           name: build docker image for ci
@@ -43,15 +44,15 @@ pipelines:
             - apk add libxml2-utils
             # Scripts to copy dependencies from dependencyManagement
             - cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
-            - version=$(cat pom.xml | sed '2 s/xmlns=".*"//g' | xmllint --xpath '/project/version/text()' -)
+            - version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
             - sed -i "s/{{version}}/$version/g" deps-pom.xml
-            - deps=$(cat pom.xml | sed '2 s/xmlns=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
+            - deps=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
             - deps=$(echo $deps | sed 's/\//\\\//g; s/ /\\n/g')
             - ln=$(cat deps-pom.xml | grep -n "<dependencies>" | cut -d':' -f1)
             - ln=$((ln + 1))
             - sed -i "$ln i $deps" deps-pom.xml
             # Scripts to copy plugins from pluginManagement
-            - plugins=$(cat pom.xml | sed '2 s/xmlns=".*"//g' | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
+            - plugins=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
             - plugins=$(echo $plugins | sed 's/\//\\\//g; s/ /\\n/g')
             - ln=$(cat deps-pom.xml | grep -n "<plugins>" | cut -d':' -f1)
             - ln=$((ln + 1))
