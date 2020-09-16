@@ -35,8 +35,7 @@ pipelines:
             - maven
           script:
             - curl --user $BB_AUTH_STRING $MAVEN_SETTINGS -o maven-settings.xml
-            - mvn package
-#            - mvn clean deploy -f pom.xml -s maven-settings.xml -Dserver.username=$NEXUS_USERNAME -Dserver.password=$NEXUS_PASSWORD -Dserver.repo.url=$NEXUS_MAVEN_REPO -Dserver.release.url=$NEXUS_MAVEN_RELEASE -Dserver.snapshot.url=$NEXUS_MAVEN_SNAPSHOT
+            - mvn clean deploy -f pom.xml -s maven-settings.xml -P release -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
       - step: 
           image: hashicorp/packer
           name: build docker image for ci
