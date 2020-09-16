@@ -25,7 +25,7 @@
         {
             "type": "shell",
             "inline": [
-                "yum install -y git",
+                "yum install -y git awscli",
                 "cd /root",
                 "mvn install -f pom.xml",
                 "mvn dependency:go-offline -f deps-pom.xml",
