@@ -7,11 +7,11 @@
 #
 # Images used: https://bitbucket.org/zepben/vm-container-images/
 #####################################################################################################################
-image: maven:3.6.1-amazoncorretto-11
+image: zepben/pipeline-java-amazoncorretto:4.1.0
 
 definitions:
   zep-basic-image: &zep-basic-image
-    image: zepben/pipeline-basic:3.0.0
+    image: zepben/pipeline-basic:4.0.0
   steps:
     - step: &setup-awscli
         name: Setup AWS CLI
