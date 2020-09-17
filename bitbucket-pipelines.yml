@@ -16,8 +16,8 @@ definitions:
     - step: &setup-awscli
         name: Setup AWS CLI
         script:
-          - sed "s/{{access_key}}/$AWS_ACCESS_KEY/" .aws/credentials
-          - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" .aws/credentials
+          - sed "s/{{access_key}}/$AWS_ACCESS_KEY/" ~/.aws/credentials
+          - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" ~/.aws/credentials
     - step: &setup-gpg
         name: Setup GPG
         script:
