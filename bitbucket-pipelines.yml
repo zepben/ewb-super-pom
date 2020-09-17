@@ -18,6 +18,11 @@ definitions:
         script:
           - sed "s/{{access_key}}/$AWS_ACCESS_KEY/' .aws/credentials
           - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" .aws/credentials
+    - step: &setup-gpg
+        name: Setup GPG
+        script:
+          - aws secretsmanager get-secret-value --secret-id zepben/gpgkey | jq '.SecretString' | cut -d\" -f2 | sed 's.\\n.\n.g' > zepben-gpg.key
+          - gpg2 --pinentry loopback --batch --import zepben-gpg.key
 options:
   max-time: 30
 
@@ -35,6 +40,7 @@ pipelines:
   tags:
     '*.*.*':
       - step: *setup-awscli
+      - step: *setup-gpg
       - step:
           name: Maven Deploy to Nexus Repo
           caches:
