@@ -54,6 +54,7 @@ pipelines:
           image: hashicorp/packer
           name: build docker image for ci
           script:
+            - apk add libxml2-utils
             # Scripts to copy dependencies from dependencyManagement
             - cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
             - version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
