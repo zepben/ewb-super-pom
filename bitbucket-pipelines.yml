@@ -12,17 +12,7 @@ image: zepben/pipeline-java-amazoncorretto:4.1.0
 definitions:
   zep-basic-image: &zep-basic-image
     image: zepben/pipeline-basic:4.0.0
-  steps:
-    - step: &setup-awscli
-        name: Setup AWS CLI
-        script:
-          - sed "s/{{access_key}}/$AWS_ACCESS_KEY/" ~/.aws/credentials
-          - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" ~/.aws/credentials
-    - step: &setup-gpg
-        name: Setup GPG
-        script:
-          - aws secretsmanager get-secret-value --secret-id zepben/gpgkey | jq '.SecretString' | cut -d\" -f2 | sed 's.\\n.\n.g' > zepben-gpg.key
-          - gpg2 --pinentry loopback --batch --import zepben-gpg.key
+
 options:
   max-time: 30
 

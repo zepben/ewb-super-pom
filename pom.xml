@@ -892,6 +892,10 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+                                <configuration>
+                                    <source>8</source> <!-- Necessary to fix error when using source/target of 1.8 https://stackoverflow.com/a/62533664 -->
+                                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

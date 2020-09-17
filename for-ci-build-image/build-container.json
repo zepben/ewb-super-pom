@@ -25,7 +25,7 @@
         {
             "type": "shell",
             "inline": [
-                "yum install -y git awscli gnupg",
+                "yum install -y git awscli gnupg jq",
                 "cd /root",
                 "mvn install -f pom.xml",
                 "mvn dependency:go-offline -f deps-pom.xml",
