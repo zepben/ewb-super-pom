@@ -11,8 +11,13 @@ image: maven:3.6.1-amazoncorretto-11
 
 definitions:
   zep-basic-image: &zep-basic-image
-    image: zepben/pipeline-basic:2.0.0
-
+    image: zepben/pipeline-basic:3.0.0
+  steps:
+    - step: &setup-awscli
+        name: Setup AWS CLI
+        script:
+          - sed "s/{{access_key}}/$AWS_ACCESS_KEY/' .aws/credentials
+          - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" .aws/credentials
 options:
   max-time: 30
 
@@ -29,18 +34,19 @@ pipelines:
             - tag_finalize_version $version
   tags:
     '*.*.*':
-      - step: 
+      - step: *setup-awscli
+      - step:
           name: Maven Deploy to Nexus Repo
           caches:
             - maven
           script:
+            - apk add libxml2-utils
             - curl --user $BB_AUTH_STRING $MAVEN_SETTINGS -o maven-settings.xml
             - mvn clean deploy -f pom.xml -s maven-settings.xml -P release -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
       - step: 
           image: hashicorp/packer
           name: build docker image for ci
           script:
-            - apk add libxml2-utils
             # Scripts to copy dependencies from dependencyManagement
             - cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
             - version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
