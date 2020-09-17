@@ -46,7 +46,6 @@ pipelines:
           script:
             - sed "s/{{access_key}}/$AWS_ACCESS_KEY/" ~/.aws/credentials
             - sed "s/{{secret_key}}/$AWS_SECRET_KEY/" ~/.aws/credentials
-            - apk add libxml2-utils
             - curl --user $BB_AUTH_STRING $MAVEN_SETTINGS -o maven-settings.xml
             - aws secretsmanager get-secret-value --secret-id zepben/gpgkey | jq '.SecretString' | cut -d\" -f2 | sed 's.\\n.\n.g' > zepben-gpg.key
             - gpg2 --batch --import zepben-gpg.key
