@@ -11,12 +11,15 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  checkstuff:
+    container: zepben/pipeline-basic:4.0.0
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Check and tag version
+        run: |
+          java-mvn-check-release-version pom.xml
+          source /scripts/common.sh
+          version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
+          tag_finalize_version $version
 
