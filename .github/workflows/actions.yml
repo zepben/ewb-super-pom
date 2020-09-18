@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check and tag version
         run: |
+          pwd
+          ls -l
           java-mvn-check-release-version pom.xml
           source /scripts/common.sh
           version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
