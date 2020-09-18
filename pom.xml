@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright 2020 Zeppelin Bend Pty Ltd
-  ~ This file is part of evolve-super-pom.
   ~
-  ~ evolve-super-pom is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU Affero General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ evolve-super-pom is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU Affero General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Affero General Public License
-  ~ along with evolve-super-pom.  If not, see <https://www.gnu.org/licenses/>.
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
   -->
 <project xmlns="http://maven.apache.org/pom/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/xmlschema-instance"
@@ -24,12 +14,12 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.1.16</version>
+    <version>0.2.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Super Pom for Evolve Maven projects. Used for version management within the evolve platform.</description>
-    <url>https://bitbucket.org/zepben/evolve-super-pom/</url>
+    <url>https://github.com/zepben/evolve-super-pom/</url>
     <organization>
         <name>Zeppelin Bend Pty Ltd.</name>
         <url>https://zepben.com</url>
@@ -64,9 +54,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://bitbucket.org/zepben/evolve-super-pom.git</connection>
-        <developerConnection>scm:git:ssh://bitbucket.org/zepben/evolve-super-pom.git</developerConnection>
-        <url>https://bitbucket.org/zepben/evolve-super-pom/src</url>
+        <connection>scm:git:git://github.com/zepben/evolve-super-pom.git</connection>
+        <developerConnection>scm:git:ssh://github.com/zepben/evolve-super-pom.git</developerConnection>
+        <url>https://github.com/zepben/evolve-super-pom/src</url>
     </scm>
 
     <properties>

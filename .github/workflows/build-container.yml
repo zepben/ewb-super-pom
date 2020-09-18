@@ -1,0 +1,56 @@
+name: Build CI Container
+
+on:
+  repository_dispatch:
+    types: [build-container]
+  workflow_dispatch:
+
+
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    container: hashicorp/packer
+    env:
+      ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY }}
+      MAVEN_SETTINGS: ${{ secrets.MAVEN_SETTINGS }}
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+      GPG_KEY_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
+      DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache maven deps
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven
+
+      - name: Create docker container
+        run: |
+          apk add libxml2-utils docker tar
+          # Scripts to copy dependencies from dependencyManagement
+          cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
+          version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
+          sed -i "s/{{version}}/$version/g" deps-pom.xml
+          deps=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
+          deps=$(echo $deps | sed 's/\//\\\//g; s/ /\\n/g')
+          ln=$(cat deps-pom.xml | grep -n "<dependencies>" | cut -d':' -f1)
+          ln=$((ln + 1))
+          sed -i "$ln i $deps" deps-pom.xml
+          # Scripts to copy plugins from pluginManagement
+          plugins=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
+          plugins=$(echo $plugins | sed 's/\//\\\//g; s/ /\\n/g')
+          ln=$(cat deps-pom.xml | grep -n "<plugins>" | cut -d':' -f1)
+          ln=$((ln + 1))
+          sed -i "$ln i $plugins" deps-pom.xml
+          xmllint -format deps-pom.xml > deps-pom-new.xml
+          mv -f deps-pom-new.xml deps-pom.xml
+          export PACKER_CONFIG_DIR="/opt/atlassian/bitbucketci/agent/build/"
+          echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
+          cd for-ci-build-image
+          packer build build-container.json
+          packer build release-container.json
+        shell: bash
