@@ -12,6 +12,7 @@ on:
 
 jobs:
   checkstuff:
+    runs-on: ubuntu-latest
     container: zepben/pipeline-basic:4.0.0
 
     steps:
