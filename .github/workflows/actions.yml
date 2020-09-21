@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check and tag version
         run: |
+          cat /scripts/.bashrc
           source /scripts/.bashrc
           java-mvn-check-release-version pom.xml
           source /scripts/common.sh
