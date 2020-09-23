@@ -26,6 +26,7 @@ jobs:
       - name: Check and tag version
         run: |
           export NEXUS_MAVEN_REPO NEXUS_USERNAME NEXUS_PASSWORD NEXUS_MAVEN_SNAPSHOT NEXUS_MAVEN_RELEASE
+          export DEBUG=true
           source /scripts/.bashrc
           chmod +x /scripts/*.sh
           /scripts/release-checks.sh --java --maven pom.xml
