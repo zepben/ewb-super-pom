@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check and tag version
         run: |
+          env
           export NEXUS_MAVEN_REPO NEXUS_USERNAME NEXUS_PASSWORD NEXUS_MAVEN_SNAPSHOT NEXUS_MAVEN_RELEASE
           export DEBUG=true
           source /scripts/.bashrc
