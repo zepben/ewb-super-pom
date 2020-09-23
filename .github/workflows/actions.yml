@@ -26,6 +26,7 @@ jobs:
         run: |
           export NEXUS_MAVEN_REPO NEXUS_USERNAME NEXUS_PASSWORD NEXUS_MAVEN_SNAPSHOT NEXUS_MAVEN_RELEASE
           source /scripts/.bashrc
+          chmod +x /scripts/*.sh
           /scripts/release-checks.sh --java --maven pom.xml
           source /scripts/common.sh
           version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
