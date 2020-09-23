@@ -1,9 +1,14 @@
 name: Release
 
 on:
+  workflow_run:
+    workflows: ["Check and tag version"]
+    branches: [main]
+    types:
+      - completed
   push:
     tags:
-      - 'v*'
+      - v[0-9]+.[0-9]+.[0-9]+
   workflow_dispatch:
 
 
