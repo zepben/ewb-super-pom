@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-and-tag:
+  check-version:
     runs-on: ubuntu-latest
     container: zepben/pipeline-basic:5.0.0
     env:
@@ -16,11 +16,8 @@ jobs:
       NEXUS_MAVEN_RELEASE: ${{ secrets.NEXUS_MAVEN_RELEASE }}
     steps:
       - uses: actions/checkout@v2
-      - name: Check and tag version
+      - name: Check version doesn't already exist
         run: |
           /scripts/release-checks.sh --java --maven pom.xml
-          source /scripts/common.sh
-          version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
-          tag_finalize_version $version
         shell: bash
 
