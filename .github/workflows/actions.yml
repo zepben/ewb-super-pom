@@ -13,13 +13,12 @@ on:
 jobs:
   checkstuff:
     runs-on: ubuntu-latest
-    container: zepben/pipeline-basic:4.0.0
+    container: zepben/pipeline-basic:5.0.0
 
     steps:
       - uses: actions/checkout@v2
       - name: Check and tag version
         run: |
-          cat /scripts/.bashrc
           source /scripts/.bashrc
           java-mvn-check-release-version pom.xml
           source /scripts/common.sh
