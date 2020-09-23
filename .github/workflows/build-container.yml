@@ -1,4 +1,4 @@
-name: Release
+name: Build CI Container
 
 on:
   workflow_run:
