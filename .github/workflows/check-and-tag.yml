@@ -1,9 +1,5 @@
-# This is a basic workflow to help you get started with Actions
+name: Check and tag version
 
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   push:
     branches: [ main ]
@@ -12,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkstuff:
+  check-and-tag:
     runs-on: ubuntu-latest
     container: zepben/pipeline-basic:5.0.0
     env:
