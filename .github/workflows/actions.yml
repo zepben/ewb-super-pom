@@ -24,6 +24,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check and tag version
         run: |
+          export NEXUS_MAVEN_REPO NEXUS_USERNAME NEXUS_PASSWORD NEXUS_MAVEN_SNAPSHOT NEXUS_MAVEN_RELEASE
           source /scripts/.bashrc
           java-mvn-check-release-version pom.xml
           source /scripts/common.sh
