@@ -22,6 +22,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Add tar for cache step
+        run: |
+          apk add tar
+
       - name: Cache maven deps
         uses: actions/cache@v2
         with:
@@ -30,7 +34,7 @@ jobs:
 
       - name: Create docker container
         run: |
-          apk add libxml2-utils docker tar
+          apk add libxml2-utils docker
           # Scripts to copy dependencies from dependencyManagement
           cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
           version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)

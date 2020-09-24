@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.1.36</version>
+    <version>0.1.37</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
