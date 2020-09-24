@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     container: zepben/pipeline-java-amazoncorretto:4.1.0
     env:
-      ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY }}
+      ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY_B64 }}
       MAVEN_SETTINGS: ${{ secrets.MAVEN_SETTINGS }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
@@ -33,7 +33,7 @@ jobs:
 
       - name: Maven deploy to Central
         run: |
-          echo $ZEPBEN_GPG_KEY > zepben-gpg.key
+          echo "$ZEPBEN_GPG_KEY" | base64 -d > zepben-gpg.key
           gpg2 --batch --import zepben-gpg.key
           mvn clean deploy -f pom.xml -s maven-settings.xml -P release,ossrh -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
         shell: bash
