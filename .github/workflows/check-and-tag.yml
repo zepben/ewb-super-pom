@@ -27,6 +27,8 @@ jobs:
           version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
           git remote rm origin
           remote="https://zepben-ci:${CI_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.name "zepben-ci"
+          git config user.email "admin.github@zepben.com"
           git remote add origin $remote
           git tag "v$version"
           git push --tags
