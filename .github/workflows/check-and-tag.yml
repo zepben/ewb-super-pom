@@ -25,6 +25,9 @@ jobs:
           /scripts/release-checks.sh --java --maven pom.xml
           source /scripts/common.sh
           version=$(xmlstarlet pyx pom.xml | grep -v ^A | xmlstarlet p2x | xmlstarlet sel -t -v "/project/version")
-          tag_finalize_version $version
+          remote="https://zepben-ci:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
+          git tag "v$version"
+          git push "$remote" --tags
+          # tag_finalize_version $version
         shell: bash
 
