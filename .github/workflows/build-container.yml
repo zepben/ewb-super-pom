@@ -22,16 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Add tar for cache step
-        run: |
-          apk add tar
-
-      - name: Cache maven deps
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: maven
-
       - name: Create docker container
         run: |
           apk add libxml2-utils docker

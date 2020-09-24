@@ -34,7 +34,8 @@
                 "rm -rf target",
                 "rm -rf src",
                 "rm -f *.xml",
-                "mv -f .m2/repository local_repo"
+                "mv -f .m2/repository local_repo",
+                "mkdir /maven"
             ]
         },
         {
