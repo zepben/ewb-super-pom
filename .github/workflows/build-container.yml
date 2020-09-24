@@ -1,11 +1,8 @@
 name: Build CI Container
 
 on:
-  workflow_run:
-    workflows: ["Release"]
-    branches: [main]
-    types:
-      - completed
+  repository_dispatch:
+    types: [build-container]
   workflow_dispatch:
 
 

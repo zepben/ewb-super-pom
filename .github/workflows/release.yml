@@ -37,3 +37,9 @@ jobs:
           gpg2 --batch --import zepben-gpg.key
           mvn clean deploy -f pom.xml -P release,ossrh -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
         shell: bash
+
+      - name: Trigger container build
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+          event-type: build-container
