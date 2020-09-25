@@ -6,8 +6,8 @@
     <servers>
         <server>
             <id>zepben-maven</id>
-            <username>${server.username}</username>
-            <password>${server.password}</password>
+            <username>${zepben.server.username}</username>
+            <password>${zepben.server.password}</password>
         </server>
         <server>
             <id>ossrh</id>
@@ -33,14 +33,14 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <repos.url>${server.repo.url}</repos.url>
-                <releases.url>${server.release.url}</releases.url>
-                <snapshots.url>${server.snapshot.url}</snapshots.url>
+                <repos.url>${zepben.server.repo.url}</repos.url>
+                <releases.url>${zepben.server.release.url}</releases.url>
+                <snapshots.url>${zepben.server.snapshot.url}</snapshots.url>
             </properties>
             <repositories>
                 <repository>
                     <id>zepben-maven</id>
-                    <url>${server.repo.url}</url>
+                    <url>${zepben.server.repo.url}</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -53,7 +53,7 @@
             <pluginRepositories>
                 <pluginRepository>
                     <id>zepben-maven</id>
-                    <url>${server.repo.url}</url>
+                    <url>${zepben.server.repo.url}</url>
                     <snapshots>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
