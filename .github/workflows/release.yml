@@ -12,7 +12,7 @@ on:
 jobs:
   deploy-central:
     runs-on: ubuntu-latest
-    container: zepben/pipeline-java-amazoncorretto:4.1.0
+    container: maven:3.6.3-amazoncorretto-11
     env:
       ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY_B64 }}
       MAVEN_SETTINGS: ${{ secrets.MAVEN_SETTINGS }}
@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "$ZEPBEN_GPG_KEY" | base64 -d > zepben-gpg.key
           gpg2 --batch --import zepben-gpg.key
-          mvn clean deploy -f pom.xml -P release,ossrh -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
+          mvn clean deploy -f pom.xml -P release,ossrh -s for-ci-build-image/maven-settings.xml -Dserver.username=$OSSRH_USERNAME -Dserver.password=$OSSRH_PASSWORD -Dgpg.key.id=$GPG_KEY_ID -Dgpg.key.password=$GPG_KEY_PASSWORD
         shell: bash
 
       - name: Trigger container build
