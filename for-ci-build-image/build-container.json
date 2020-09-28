@@ -25,8 +25,7 @@
         {
             "type": "shell",
             "inline": [
-                "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-                "yum install -y git awscli gnupg jq xmlstarlet",
+                "yum install -y git awscli gnupg jq libxml2",
                 "cd /root",
                 "mvn install -f pom.xml",
                 "mvn dependency:go-offline -f deps-pom.xml",
