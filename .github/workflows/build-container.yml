@@ -46,5 +46,4 @@ jobs:
           echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
           cd for-ci-build-image
           packer build build-container.json
-          packer build release-container.json
         shell: bash
