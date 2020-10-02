@@ -36,7 +36,9 @@
                 "rm -rf src",
                 "rm -f *.xml",
                 "mv -f .m2/repository local_repo",
-                "mkdir /maven"
+                "mkdir /maven",
+                "rm -rf /etc/localtime",
+                "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"
             ]
         },
         {
