@@ -93,10 +93,26 @@
                 </pluginRepository>
             </pluginRepositories>
         </profile>
+        <profile>
+            <id>allow-snapshots</id>
+            <repositories>
+                <repository>
+                    <id>snapshots-repo</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
     </profiles>
     <activeProfiles>
         <activeProfile>local-maven</activeProfile>
         <activeProfile>zepben-maven</activeProfile>
         <activeProfile>ossrh</activeProfile>
+        <activeProfile>allow-snapshots</activeProfile>
     </activeProfiles>
 </settings>
