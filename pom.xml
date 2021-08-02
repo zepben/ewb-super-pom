@@ -74,10 +74,9 @@
         <hamcrest.version>2.2</hamcrest.version>
 
         <!-- protobuf options -->
-        <protobuf.version>3.13.0</protobuf.version>
+        <protobuf.version>3.17.3</protobuf.version>
         <protobuf.plugin.version>3.11.4</protobuf.plugin.version>
-        <grpc.version>1.32.1</grpc.version>
-        <grpc.kotlin.version>0.1.5</grpc.kotlin.version>
+        <grpc.version>1.39.0</grpc.version>
 
         <!-- Kotlin options -->
         <kotlin.version>1.5.21</kotlin.version>
@@ -215,15 +214,16 @@
                 <version>${grpc.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-kotlin-stub</artifactId>
-                <version>${grpc.kotlin.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.annotation</groupId>
                 <artifactId>javax.annotation-api</artifactId>
                 <version>1.2</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-testing</artifactId>
+                <version>${grpc.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- Utils -->
@@ -605,7 +605,7 @@
                                 <goal>run</goal>
                             </goals>
                             <configuration>
-                                <protocArtifact>com.google.protobuf:protoc:${protobuf.version}</protocArtifact>
+                                <protocVersion>${protobuf.version}</protocVersion>
                                 <addSources>true</addSources>
                                 <includeStdTypes>true</includeStdTypes>
                                 <includeDirectories>
@@ -618,11 +618,6 @@
                                 <outputTargets>
                                     <outputTarget>
                                         <type>java</type>
-                                        <outputDirectory>target/generated-sources/src</outputDirectory>
-                                    </outputTarget>
-                                    <outputTarget>
-                                        <type>grpc-java</type>
-                                        <pluginArtifact>io.grpc:protoc-gen-grpc-kotlin:${grpc.kotlin.version}</pluginArtifact>
                                         <outputDirectory>target/generated-sources/src</outputDirectory>
                                     </outputTarget>
                                     <outputTarget>
