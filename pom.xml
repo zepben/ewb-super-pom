@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.16.0</version>
+    <version>0.17.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -422,7 +422,6 @@
                 <artifactId>aws-java-sdk-bom</artifactId>
                 <version>1.11.442</version>
                 <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.amazonaws</groupId>
@@ -460,7 +459,6 @@
                 <artifactId>azure-sdk-bom</artifactId>
                 <version>${azure.bom.version}</version>
                 <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
         </dependencies>
