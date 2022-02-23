@@ -95,9 +95,6 @@
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
 
-        <!-- azure sdk -->
-        <azure.bom.version>1.0.5</azure.bom.version>
-
         <dokka.version>1.4.10</dokka.version>
     </properties>
 
@@ -419,12 +416,6 @@
             <!--AWS packages-->
             <dependency>
                 <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-bom</artifactId>
-                <version>1.11.442</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>com.amazonaws</groupId>
                 <artifactId>aws-lambda-java-core</artifactId>
                 <version>1.2.0</version>
             </dependency>
@@ -451,14 +442,6 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>jwks-rsa</artifactId>
                 <version>0.11.0</version>
-            </dependency>
-
-            <!-- Azure SDK -->
-            <dependency>
-                <groupId>com.azure</groupId>
-                <artifactId>azure-sdk-bom</artifactId>
-                <version>${azure.bom.version}</version>
-                <type>pom</type>
             </dependency>
 
         </dependencies>
