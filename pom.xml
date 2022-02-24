@@ -101,6 +101,9 @@
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
 
+        <!-- azure sdk -->
+        <azure.bom.version>1.0.5</azure.bom.version>
+
         <dokka.version>1.4.10</dokka.version>
     </properties>
 
