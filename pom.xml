@@ -6,15 +6,15 @@
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
   -->
-<project xmlns="http://maven.apache.org/pom/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/xmlschema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.17.0</version>
+    <version>0.18.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -48,6 +48,12 @@
         <developer>
             <name>Kurt Greaves</name>
             <email>kurt.greaves@zepben.com</email>
+            <organization>Zeppelin Bend</organization>
+            <organizationUrl>https://zepben.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Marcus Koh</name>
+            <email>marcus.koh@zepben.com</email>
             <organization>Zeppelin Bend</organization>
             <organizationUrl>https://zepben.com</organizationUrl>
         </developer>
@@ -419,12 +425,6 @@
             <!--AWS packages-->
             <dependency>
                 <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-bom</artifactId>
-                <version>1.11.442</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>com.amazonaws</groupId>
                 <artifactId>aws-lambda-java-core</artifactId>
                 <version>1.2.0</version>
             </dependency>
@@ -451,14 +451,6 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>jwks-rsa</artifactId>
                 <version>0.11.0</version>
-            </dependency>
-
-            <!-- Azure SDK -->
-            <dependency>
-                <groupId>com.azure</groupId>
-                <artifactId>azure-sdk-bom</artifactId>
-                <version>${azure.bom.version}</version>
-                <type>pom</type>
             </dependency>
 
         </dependencies>
