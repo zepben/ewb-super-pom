@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.21.0</version>
+    <version>0.22.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -79,6 +79,8 @@
         <mockito.version>3.12.4</mockito.version>
         <mockito.kotlin.version>3.2.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
+        <graphql-kotlin.version>4.0.0-alpha.15</graphql-kotlin.version>
+        <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
         <protobuf.version>3.17.3</protobuf.version>
@@ -195,6 +197,43 @@
                 <artifactId>kotlin-wiremock</artifactId>
                 <version>1.0.1</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- jetbrain exposed: Kotlin ORM -->
+            <dependency>
+                <groupId>org.jetbrains.exposed</groupId>
+                <artifactId>exposed-core</artifactId>
+                <version>${jetbrains.exposed.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.exposed</groupId>
+                <artifactId>exposed-dao</artifactId>
+                <version>${jetbrains.exposed.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.exposed</groupId>
+                <artifactId>exposed-jdbc</artifactId>
+                <version>${jetbrains.exposed.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.exposed</groupId>
+                <artifactId>exposed-java-time</artifactId>
+                <version>${jetbrains.exposed.version}</version>
+            </dependency>
+            <!-- GraphQL -->
+            <dependency>
+                <groupId>com.expediagroup</groupId>
+                <artifactId>graphql-kotlin-server</artifactId>
+                <version>${graphql-kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.expediagroup</groupId>
+                <artifactId>graphql-kotlin-schema-generator</artifactId>
+                <version>${graphql-kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-java-extended-scalars</artifactId>
+                <version>18.0</version>
             </dependency>
 
             <!-- command line parsing -->
