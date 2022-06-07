@@ -1,65 +1,68 @@
 {
-    "builders": [
-        {
-            "type": "docker",
-            "image": "maven:3.6.3-amazoncorretto-11",
-            "commit": "true"
-        }
-    ],
-    "provisioners": [
-        {
-            "type": "file",
-            "source": "../deps-pom.xml",
-            "destination": "/root/deps-pom.xml"
-        },
-        {
-            "type": "file",
-            "source": "../pom.xml",
-            "destination": "/root/pom.xml"
-        },
-        {
-            "type": "file",
-            "source": "src/",
-            "destination": "/root/src/"
-        },
-        {
-            "type": "shell",
-            "inline": [
-                "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-                "yum install -y git awscli gnupg jq xmlstarlet",
-                "cd /root",
-                "mvn install -f pom.xml",
-                "mvn dependency:go-offline -f deps-pom.xml",
-                "mkdir -p src/main/java",
-                "mvn clean verify -f deps-pom.xml",
-                "rm -rf target",
-                "rm -rf src",
-                "rm -f *.xml",
-                "mv -f .m2/repository local_repo",
-                "mkdir /maven",
-                "rm -rf /etc/localtime",
-                "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"
-            ]
-        },
-        {
-            "type": "file",
-            "source": "maven-settings.xml",
-            "destination": "/root/.m2/settings.xml"
-        },
-        {
-            "type": "file",
-            "source": "./aws/",
-            "destination": "/root/.aws/"
-        }
-    ],
-    "post-processors": [
-        [
-            {
-                "type": "docker-tag",
-                "repository": "zepben/pipeline-java",
-                "tag": "latest"
-            },
-            "docker-push"
-        ]
+  "builders": [
+    {
+      "commit": "true",
+      "image": "maven:3.6.3-amazoncorretto-11",
+      "type": "docker"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "repository": "zepben/pipeline-java",
+        "tags": [
+          "latest"
+        ],
+        "type": "docker-tag"
+      },
+      "docker-push"
     ]
- }
+  ],
+  "provisioners": [
+    {
+      "destination": "/root/deps-pom.xml",
+      "source": "../deps-pom.xml",
+      "type": "file"
+    },
+    {
+      "destination": "/root/pom.xml",
+      "source": "../pom.xml",
+      "type": "file"
+    },
+    {
+      "destination": "/root/src/",
+      "source": "src/",
+      "type": "file"
+    },
+    {
+      "inline": [
+        "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+        "yum install -y git awscli gnupg jq xmlstarlet",
+        "cd /root",
+        "mvn install -f pom.xml",
+        "mvn dependency:go-offline -f deps-pom.xml",
+        "mkdir -p src/main/java",
+        "mvn clean verify -f deps-pom.xml",
+        "rm -rf target",
+        "rm -rf src",
+        "rm -f *.xml",
+        "mv -f .m2/repository local_repo",
+        "mkdir /maven",
+        "rm -rf /etc/localtime",
+        "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"
+      ],
+      "type": "shell"
+    },
+    {
+      "destination": "/root/.m2/settings.xml",
+      "source": "maven-settings.xml",
+      "type": "file"
+    },
+    {
+      "destination": "/root/.aws/",
+      "source": "./aws/",
+      "type": "file"
+    }
+  ]
+}
+
