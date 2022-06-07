@@ -1,4 +1,9 @@
 {
+  "variables": {
+    "dockerhub_user": null,
+    "dockerhub_pw": null
+  },
+
   "builders": [
     {
       "commit": "true",
@@ -6,18 +11,23 @@
       "type": "docker"
     }
   ],
+
   "post-processors": [
     [
       {
-        "repository": "zepben/pipeline-java",
-        "tags": [
-          "latest"
-        ],
+        "repository": "ressent/pipeline-java",
+        "tags": [ "latest" ],
         "type": "docker-tag"
       },
-      "docker-push"
+      {
+        "type": "docker-push",
+        "login": true,
+        "login_username": "{{user `dockerhub_user`}}",
+        "login_password": "{{user `dockerhub_pw`}}"
+      }
     ]
   ],
+
   "provisioners": [
     {
       "destination": "/root/deps-pom.xml",
