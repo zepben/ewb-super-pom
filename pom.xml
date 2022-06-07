@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.22.0</version>
+    <version>0.23.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -83,9 +83,9 @@
         <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
-        <protobuf.version>3.17.3</protobuf.version>
+        <protobuf.version>3.21.1</protobuf.version>
         <protobuf.plugin.version>3.11.4</protobuf.plugin.version>
-        <grpc.version>1.40.0</grpc.version>
+        <grpc.version>1.47.0</grpc.version>
 
         <!-- Kotlin options -->
         <kotlin.version>1.5.31</kotlin.version>
