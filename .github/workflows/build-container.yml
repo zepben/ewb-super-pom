@@ -17,8 +17,8 @@ jobs:
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       GPG_KEY_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
+      DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-      DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
 
@@ -43,7 +43,7 @@ jobs:
           xmllint -format deps-pom.xml > deps-pom-new.xml
           mv -f deps-pom-new.xml deps-pom.xml
           export PACKER_CONFIG_DIR="/opt/atlassian/bitbucketci/agent/build/"
-          echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
+          echo $DOCKER_HUB_ACCESS_TOKEN | docker login -u $DOCKER_HUB_USER --password-stdin
           cd for-ci-build-image
           packer build build-container.json
         shell: bash
