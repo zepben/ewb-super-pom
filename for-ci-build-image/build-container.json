@@ -15,7 +15,7 @@
   "post-processors": [
     [
       {
-        "repository": "ressent/pipeline-java",
+        "repository": "zepben/pipeline-java",
         "tags": [ "latest" ],
         "type": "docker-tag"
       },
