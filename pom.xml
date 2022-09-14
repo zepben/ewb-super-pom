@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.23.0</version>
+    <version>0.24.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -102,6 +102,9 @@
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
+
+        <!-- KTOR -->
+        <ktor.version>2.1.0</ktor.version>
 
         <!-- azure sdk -->
         <azure.bom.version>1.0.5</azure.bom.version>
@@ -381,7 +384,7 @@
             <dependency>
                 <groupId>io.mockk</groupId>
                 <artifactId>mockk</artifactId>
-                <version>1.10.6</version>
+                <version>1.12.7</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -389,6 +392,33 @@
                 <artifactId>joda-time</artifactId>
                 <version>2.10.10</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- KTOR -->
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-server-core-jvm</artifactId>
+                <version>${ktor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-server-netty-jvm</artifactId>
+                <version>${ktor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-server-content-negotiation-jvm</artifactId>
+                <version>${ktor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
+                <version>${ktor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.ktor</groupId>
+                <artifactId>ktor-serialization-jackson-jvm</artifactId>
+                <version>${ktor.version}</version>
             </dependency>
 
             <!-- DB -->
