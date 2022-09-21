@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.24.0</version>
+    <version>0.25.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -79,7 +79,8 @@
         <mockito.version>3.12.4</mockito.version>
         <mockito.kotlin.version>3.2.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <graphql-kotlin.version>5.4.0</graphql-kotlin.version>
+        <graphql-java.version>19.2</graphql-java.version>
+        <graphql-kotlin.version>6.2.5</graphql-kotlin.version>
         <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
@@ -235,8 +236,13 @@
             </dependency>
             <dependency>
                 <groupId>com.graphql-java</groupId>
+                <artifactId>graphql-java</artifactId>
+                <version>${graphql-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java-extended-scalars</artifactId>
-                <version>18.0</version>
+                <version>19.0</version>
             </dependency>
 
             <!-- command line parsing -->
