@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.25.0</version>
+    <version>0.26.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -626,6 +626,7 @@
                                             <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
                                         </manifestEntries>
                                     </transformer>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 </transformers>
                                 <artifactSet/>
                                 <filters>
