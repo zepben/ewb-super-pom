@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.28.0</version>
+    <version>0.29.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -111,6 +111,8 @@
         <azure.bom.version>1.0.5</azure.bom.version>
 
         <dokka.version>1.4.10</dokka.version>
+
+        <apache.lucene.version>9.7.0</apache.lucene.version>
     </properties>
 
     <distributionManagement>
@@ -544,6 +546,18 @@
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>1.6.1</version>
+            </dependency>
+
+            <!-- Apache Lucene -->
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-core</artifactId>
+                <version>${apache.lucene.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-queryparser</artifactId>
+                <version>${apache.lucene.version}</version>
             </dependency>
 
         </dependencies>
