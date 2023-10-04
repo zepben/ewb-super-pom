@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.30.0</version>
+    <version>0.31.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -89,12 +89,12 @@
         <grpc.version>1.57.2</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>1.5.31</kotlin.version>
+        <kotlin.version>1.9.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin.coroutines.version>1.5.2</kotlin.coroutines.version>
+        <kotlin.coroutines.version>1.7.1</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.language.version>1.5</kotlin.language.version>
-        <kotlin.serialization.version>1.3.0</kotlin.serialization.version>
+        <kotlin.language.version>1.9</kotlin.language.version>
+        <kotlin.serialization.version>1.6.0</kotlin.serialization.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -163,6 +163,16 @@
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk8</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-common</artifactId>
                 <version>${kotlin.version}</version>
             </dependency>
             <dependency>
@@ -397,7 +407,7 @@
             <dependency>
                 <groupId>io.mockk</groupId>
                 <artifactId>mockk</artifactId>
-                <version>1.12.7</version>
+                <version>1.12.4</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
