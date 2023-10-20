@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.31.0</version>
+    <version>0.32.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -261,7 +261,7 @@
             <dependency>
                 <groupId>com.github.ajalt.clikt</groupId>
                 <artifactId>clikt-jvm</artifactId>
-                <version>3.2.0</version>
+                <version>4.2.0</version>
             </dependency>
 
 
@@ -1078,7 +1078,7 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
+                        <version>1.6.13</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
