@@ -1,3 +1,20 @@
+## [0.34.1]
+
+### Breaking Changes
+* None.
+
+### New Features
+* None.
+
+### Enhancements
+* None.
+
+### Fixes
+* Updated `slf4j-api` to `2.0.9`, which is compatible with the new logback version (`1.4.11`)
+
+### Notes
+* None.
+
 ## [0.34.0]
 
 ### Breaking Changes
