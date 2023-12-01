@@ -80,7 +80,7 @@
         <mockito.kotlin.version>3.2.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
         <graphql-java.version>21.3</graphql-java.version>
-        <graphql-kotlin.version>6.2.5</graphql-kotlin.version>
+        <graphql-kotlin.version>7.0.2</graphql-kotlin.version>
         <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
