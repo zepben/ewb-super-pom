@@ -1,3 +1,22 @@
+## [0.34.1]
+
+### Breaking Changes
+* None.
+
+### New Features
+* None.
+
+### Enhancements
+* Updated version of gRPC dependencies to `1.59.1`.
+* Updated version of GraphQL-Kotlin dependencies to `6.5.6`. From version `7.0.0` onwards, [GraphQL-Kotlin is only
+  supported on Java 17+](https://github.com/ExpediaGroup/graphql-kotlin/releases/tag/7.0.0).
+
+### Fixes
+* Updated `slf4j-api` to `2.0.9`, which is compatible with the new logback version (`1.4.11`)
+
+### Notes
+* None.
+
 ## [0.34.0]
 
 ### Breaking Changes

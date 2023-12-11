@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.34.0</version>
+    <version>0.34.1</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -72,7 +72,7 @@
         <mainClass>define.in.your.child.pom.for.shading</mainClass>
 
         <autovalue.version>1.7</autovalue.version>
-        <slf4j.version>1.7.24</slf4j.version>
+        <slf4j.version>2.0.9</slf4j.version>
         <vertx.version>4.4.6</vertx.version>
 
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
@@ -80,13 +80,13 @@
         <mockito.kotlin.version>3.2.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
         <graphql-java.version>21.3</graphql-java.version>
-        <graphql-kotlin.version>6.2.5</graphql-kotlin.version>
+        <graphql-kotlin.version>6.5.6</graphql-kotlin.version>
         <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
         <protobuf.version>3.24.2</protobuf.version>
         <protobuf.plugin.version>3.11.4</protobuf.plugin.version>
-        <grpc.version>1.57.2</grpc.version>
+        <grpc.version>1.59.1</grpc.version>
 
         <!-- Kotlin options -->
         <kotlin.version>1.9.10</kotlin.version>
