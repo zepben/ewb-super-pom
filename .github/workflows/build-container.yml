@@ -4,7 +4,10 @@ on:
   repository_dispatch:
     types: [build-container]
   workflow_dispatch:
-
+  push:
+    branches:
+      - "*"
+      - "!main"
 
 jobs:
   build-container:
@@ -20,11 +23,15 @@ jobs:
       DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install deps
         run: |
           apk add libxml2-utils docker
+
+      - name: Packer Version
+        run: |
+          packer version
 
       - name: Create docker container
         run: |
@@ -46,6 +53,13 @@ jobs:
           xmllint -format deps-pom.xml > deps-pom-new.xml
           mv -f deps-pom-new.xml deps-pom.xml
           export PACKER_CONFIG_DIR="/opt/atlassian/bitbucketci/agent/build/"
+          ADDITIONAL_ARGS=""
+          if [[ $GITHUB_REF_NAME != "main" ]]; then
+            ADDITIONAL_ARGS="-except docker.push,docker.tag"
+          fi
+
           cd for-ci-build-image
-          packer build -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN build-container.json
+          packer init build-container.pkr.hcl
+          packer validate build-container.pkr.hcl
+          packer build $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
