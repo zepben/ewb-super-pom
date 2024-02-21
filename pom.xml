@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.34.2</version>
+    <version>0.35.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -112,7 +112,7 @@
 
         <dokka.version>1.4.10</dokka.version>
 
-        <apache.lucene.version>9.7.0</apache.lucene.version>
+        <apache.lucene.version>9.9.2</apache.lucene.version>
     </properties>
 
     <distributionManagement>
@@ -567,6 +567,11 @@
             <dependency>
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-queryparser</artifactId>
+                <version>${apache.lucene.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analysis-common</artifactId>
                 <version>${apache.lucene.version}</version>
             </dependency>
 

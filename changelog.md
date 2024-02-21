@@ -1,3 +1,21 @@
+## [0.35.0]
+
+### Breaking Changes
+* None.
+
+### New Features
+* Added `lucene-analysis-common` to `dependencyManagement`.
+
+### Enhancements
+* Updated version of Apache Lucene to `9.9.2`.
+
+### Fixes
+* None.
+
+### Notes
+* None.
+
+
 ## [0.34.1]
 
 ### Breaking Changes
