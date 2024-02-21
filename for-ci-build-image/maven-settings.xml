@@ -15,15 +15,15 @@
             <password>${ossrh.server.password}</password>
         </server>
         <server>
-            <id>${gpg.key.id}</id>
-            <passphrase>${gpg.key.password}</passphrase>
+            <id>${gpg.key}</id>
+            <passphrase>${gpg.password}</passphrase>
         </server>
     </servers>
     <profiles>
         <profile>
             <id>ossrh</id>
             <properties>
-                <gpg.keyname>${gpg.key.id}</gpg.keyname>
+                <gpg.keyname>${gpg.key}</gpg.keyname>
                 <gpg.executable>gpg2</gpg.executable>
             </properties>
         </profile>
