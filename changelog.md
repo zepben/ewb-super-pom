@@ -1,3 +1,20 @@
+## [0.35.1]
+
+### Breaking Changes
+* None.
+
+### New Features
+* None.
+
+### Enhancements
+* Updated version of Ktor to `2.3.8`.
+
+### Fixes
+* None.
+
+### Notes
+* None.
+
 ## [0.35.0]
 
 ### Breaking Changes
