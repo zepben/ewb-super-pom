@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.35.1</version>
+    <version>0.35.2</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -105,7 +105,7 @@
         <skip.integration.tests>true</skip.integration.tests>
 
         <!-- KTOR -->
-        <ktor.version>2.3.8</ktor.version>
+        <ktor.version>2.1.0</ktor.version>
 
         <!-- azure sdk -->
         <azure.bom.version>1.0.5</azure.bom.version>
