@@ -1,3 +1,20 @@
+## [0.35.2]
+
+### Breaking Changes
+* None.
+
+### New Features
+* None.
+
+### Enhancements
+* Downgrade version of Ktor to `2.1.0` to solve issue with Netty and HTTP2, see [KTOR-1516](https://youtrack.jetbrains.com/issue/KTOR-6151/Request-hangs-on-Firefox-with-Netty-HTTPS-and-Compression)
+
+### Fixes
+* None.
+
+### Notes
+* None.
+
 ## [0.35.1]
 
 ### Breaking Changes
