@@ -1,3 +1,20 @@
+## [0.36.0]
+
+### Breaking Changes
+* None.
+
+### New Features
+* Added `org.testcontainers.postgresql` to `dependencyManagement`
+
+### Enhancements
+* None
+
+### Fixes
+* None.
+
+### Notes
+* None.
+
 ## [0.35.2]
 
 ### Breaking Changes
