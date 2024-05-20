@@ -766,6 +766,21 @@
                     </executions>
                 </plugin>
 
+                <!-- Static analysis and linting -->
+                <plugin>
+                    <groupId>com.github.ozsie</groupId>
+                    <artifactId>detekt-maven-plugin</artifactId>
+                    <version>1.23.5</version>
+                    <configuration>
+                        <config>${project.basedir}/detekt.yaml</config>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>verify</phase>
+                            <goals><goal>check</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
