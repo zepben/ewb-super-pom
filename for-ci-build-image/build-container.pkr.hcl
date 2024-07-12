@@ -44,6 +44,20 @@ build {
     inline = ["yum install -y git awscli gnupg jq xmlstarlet", "cd /root", "mvn install -f pom.xml", "mvn dependency:go-offline -f deps-pom.xml", "mkdir -p src/main/java", "mvn clean verify -f deps-pom.xml", "rm -rf target", "rm -rf src", "rm -f *.xml", "mv -f .m2/repository local_repo", "mkdir /maven", "rm -rf /etc/localtime", "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"]
   }
 
+  provisioner "shell" {
+    inline = [
+      "cd /tmp",
+      "sudo yum -y install gcc libxml2 libxml2-devel libxslt-devel",
+      "wget https://sourceforge.net/projects/xmlstar/files/xmlstarlet/1.6.1/xmlstarlet-1.6.1.tar.gz",
+      "tar -xzvf xmlstarlet-1.6.1.tar.gz",
+      "cd xmlstarlet-1.6.1",
+      "./configure",
+      "export C_INCLUDE_PATH=/usr/include/libxml2",
+      "make",
+      "make install"
+    ]
+  }
+
   provisioner "file" {
     destination = "/root/.m2/settings.xml"
     source      = "maven-settings.xml"
