@@ -42,7 +42,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "yum -y install gcc libxml2 libxml2-devel libxslt-devel git awscli gnupg jq",
+      "yum -y install gcc wget libxml2 libxml2-devel libxslt-devel git awscli gnupg jq",
       "cd /tmp",
       "wget https://sourceforge.net/projects/xmlstar/files/xmlstarlet/1.6.1/xmlstarlet-1.6.1.tar.gz",
       "tar -xzvf xmlstarlet-1.6.1.tar.gz",
