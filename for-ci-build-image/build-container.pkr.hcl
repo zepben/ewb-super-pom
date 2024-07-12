@@ -60,11 +60,11 @@ build {
       repository = "zepben/pipeline-java"
       tags       = ["latest"]
     }
-    # post-processor "docker-push" {
-    #   name           = "docker.push"
-    #   login          = true
-    #   login_password = "${var.dockerhub_pw}"
-    #   login_username = "${var.dockerhub_user}"
-    # }
+    post-processor "docker-push" {
+      name           = "docker.push"
+      login          = true
+      login_password = "${var.dockerhub_pw}"
+      login_username = "${var.dockerhub_user}"
+    }
   }
 }
