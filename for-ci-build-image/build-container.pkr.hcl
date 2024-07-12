@@ -41,7 +41,7 @@ build {
   }
 
   provisioner "shell" {
-    inline = ["yum install -y git awscli gnupg jq xmlstarlet", "cd /root", "mvn install -f pom.xml", "mvn dependency:go-offline -f deps-pom.xml", "mkdir -p src/main/java", "mvn clean verify -f deps-pom.xml", "rm -rf target", "rm -rf src", "rm -f *.xml", "mv -f .m2/repository local_repo", "mkdir /maven", "rm -rf /etc/localtime", "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"]
+    inline = ["yum install -y git awscli gnupg jq", "cd /root", "mvn install -f pom.xml", "mvn dependency:go-offline -f deps-pom.xml", "mkdir -p src/main/java", "mvn clean verify -f deps-pom.xml", "rm -rf target", "rm -rf src", "rm -f *.xml", "mv -f .m2/repository local_repo", "mkdir /maven", "rm -rf /etc/localtime", "ln -s /usr/share/zoneinfo/Australia/Sydney /etc/localtime"]
   }
 
   provisioner "shell" {
