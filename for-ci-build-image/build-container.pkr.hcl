@@ -19,7 +19,7 @@ variable "dockerhub_user" {
 
 source "docker" "image" {
   commit = "true"
-  image  = "maven:3.6.3-amazoncorretto-11"
+  image  = "maven:3.9.8-amazoncorretto-11-al2023"
 }
 
 build {
@@ -60,11 +60,11 @@ build {
       repository = "zepben/pipeline-java"
       tags       = ["latest"]
     }
-    post-processor "docker-push" {
-      name           = "docker.push"
-      login          = true
-      login_password = "${var.dockerhub_pw}"
-      login_username = "${var.dockerhub_user}"
-    }
+    # post-processor "docker-push" {
+    #   name           = "docker.push"
+    #   login          = true
+    #   login_password = "${var.dockerhub_pw}"
+    #   login_username = "${var.dockerhub_user}"
+    # }
   }
 }
