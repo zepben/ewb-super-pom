@@ -1,3 +1,8 @@
+## [0.36.1]
+
+### Fixes
+* Fix gpg login from new issue that only arose on debian
+
 ## [0.36.0]
 
 ### Breaking Changes
