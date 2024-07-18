@@ -17,13 +17,7 @@ jobs:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Cache maven deps
-        uses: actions/cache@v2
-        with:
-          path: /maven
-          key: maven
+      - uses: actions/checkout@v3
 
       - name: Maven deploy to Central
         id: build
