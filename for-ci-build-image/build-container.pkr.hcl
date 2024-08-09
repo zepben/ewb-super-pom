@@ -45,7 +45,7 @@ build {
   }
 
   provisioner "file" {
-    destination = "/root/.m2/settings.xml"
+    destination = "/usr/share/maven/conf/settings.xml"
     source      = "maven-settings.xml"
   }
 
