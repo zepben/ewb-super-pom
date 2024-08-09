@@ -19,7 +19,7 @@ variable "dockerhub_user" {
 
 source "docker" "image" {
   commit = "true"
-  image  = "pipeline-java:4.5.2"
+  image  = "zepben/pipeline-java:4.5.2"
 }
 
 build {
