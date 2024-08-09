@@ -52,7 +52,6 @@ jobs:
           sed -i "$ln i $plugins" deps-pom.xml
           xmllint -format deps-pom.xml > deps-pom-new.xml
           mv -f deps-pom-new.xml deps-pom.xml
-          export PACKER_CONFIG_DIR="/opt/atlassian/bitbucketci/agent/build/"
           ADDITIONAL_ARGS=""
           if [[ $GITHUB_REF_NAME != "main" ]]; then
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
@@ -61,5 +60,5 @@ jobs:
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
-          packer build $ADDITIONAL_ARGS build-container.pkr.hcl
+          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
