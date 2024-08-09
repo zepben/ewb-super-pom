@@ -19,7 +19,7 @@ variable "dockerhub_user" {
 
 source "docker" "image" {
   commit = "true"
-  image  = "maven:3.6.3-amazoncorretto-11"
+  image  = "pipeline-java"
 }
 
 build {
@@ -57,7 +57,7 @@ build {
   post-processors {
     post-processor "docker-tag" {
       name       = "docker.tag"
-      repository = "zepben/pipeline-java"
+      repository = "zepben/pipeline-java-ewb"
       tags       = ["latest"]
     }
     post-processor "docker-push" {
