@@ -110,7 +110,7 @@
         <!-- azure sdk -->
         <azure.bom.version>1.0.5</azure.bom.version>
 
-        <dokka.version>1.4.10</dokka.version>
+        <dokka.version>1.9.20</dokka.version>
 
         <apache.lucene.version>9.9.2</apache.lucene.version>
     </properties>
