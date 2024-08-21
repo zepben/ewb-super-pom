@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.36.1</version>
+    <version>0.36.2</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -110,7 +110,7 @@
         <!-- azure sdk -->
         <azure.bom.version>1.0.5</azure.bom.version>
 
-        <dokka.version>1.4.10</dokka.version>
+        <dokka.version>1.9.20</dokka.version>
 
         <apache.lucene.version>9.9.2</apache.lucene.version>
     </properties>
