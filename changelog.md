@@ -1,3 +1,8 @@
+## [0.36.2]
+
+### Fixes
+* Upgrade dokka as 1.4.10 has gone missing from central repos
+
 ## [0.36.1]
 
 ### Fixes
