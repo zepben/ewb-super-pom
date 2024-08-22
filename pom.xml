@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.36.2</version>
+    <version>0.36.3</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -1051,8 +1051,10 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
                         <version>${dokka.version}</version>
                         <executions>
                             <execution>
-                                <phase>verify</phase>
+                                <phase>pre-site</phase>
                                 <goals>
+                                    <goal>dokka</goal>
+                                    <goal>javadoc</goal>
                                     <goal>javadocJar</goal>
                                 </goals>
                             </execution>
@@ -1065,6 +1067,9 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
                                     <version>${dokka.version}</version>
                                 </plugin>
                             </dokkaPlugins>
+                            <sourceDirectories>
+                                <dir>src/main/kotlin</dir>
+                            </sourceDirectories>
                         </configuration>
                     </plugin>
 
