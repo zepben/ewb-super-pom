@@ -1,3 +1,18 @@
+## [0.36.5]
+
+### New Features
+* Added `s3` to `dependencyManagement`.
+
+## [0.36.4]
+
+### Fixes
+* Fix to run dokka as part of the package process as deploy doesn't seem to run pre-site.
+
+## [0.36.3]
+
+### Fixes
+* Generate docs pre-site and specify extra necessary goals for javadocs and sources jars
+
 ## [0.36.2]
 
 ### Fixes
