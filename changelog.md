@@ -1,3 +1,8 @@
+## [0.36.6]
+
+### Enhancements
+- Change from using `s3` SDK dependecy directly to use AWS SDK BOM
+
 ## [0.36.5]
 
 ### New Features
