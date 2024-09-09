@@ -110,6 +110,9 @@
         <!-- azure sdk -->
         <azure.bom.version>1.0.5</azure.bom.version>
 
+        <!-- aws sdk -->
+        <aws.sdk.version>2.27.21</aws.sdk.version>
+
         <dokka.version>1.9.20</dokka.version>
 
         <apache.lucene.version>9.9.2</apache.lucene.version>
@@ -533,8 +536,10 @@
             </dependency>
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
-                <artifactId>s3</artifactId>
-                <version>2.27.11</version>
+                <artifactId>bom</artifactId>
+                <version>${aws.sdk.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
