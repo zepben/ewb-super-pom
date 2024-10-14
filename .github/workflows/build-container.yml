@@ -57,6 +57,12 @@ jobs:
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
           fi
 
+          if [ "z${{ github.event.client_payload.tag }}" != "z" ]; then
+              echo "PIPELINE_JAVA_IMAGE=zepben/pipeline-java:${{ github.event.client_payload.tag }}" >> "${GITHUB_ENV}"
+          else
+              echo "PIPELINE_JAVA_IMAGE=zepben/pipeline-java" >> "${GITHUB_ENV}"
+          fi
+
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
