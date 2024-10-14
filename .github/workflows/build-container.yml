@@ -60,10 +60,14 @@ jobs:
           if [ "z${{ github.event.client_payload.tag }}" != "z" ]; then
             # Some label was given via remote call
             PIPELINE_JAVA_IMAGE="-var base_image=zepben/pipeline-java:${{ github.event.client_payload.tag }}"
-          else
+          fi
+
+          if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
+            IMAGE_TAGS="-var tags=${{ github.event.client_payload.labels }}"
+          fi
 
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
-          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $ADDITIONAL_ARGS build-container.pkr.hcl
+          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
