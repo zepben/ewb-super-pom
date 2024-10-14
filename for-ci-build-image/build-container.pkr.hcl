@@ -17,9 +17,14 @@ variable "dockerhub_user" {
   default = "${env("DOCKER_HUB_USER")}"
 }
 
+variable "base_image" {
+  type = string
+  default = "zepben/pipeline-java"
+}
+
 source "docker" "image" {
   commit = "true"
-  image  = "${env("PIPELINE_JAVA_IMAGE")}"
+  image  = var.base_image
 }
 
 build {
