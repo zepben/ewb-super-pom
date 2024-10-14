@@ -29,7 +29,7 @@ variable "tags" {
 
 source "docker" "image" {
   commit = "true"
-  image  = ${var.base_image}
+  image  = var.base_image
 }
 
 build {
@@ -68,7 +68,7 @@ build {
     post-processor "docker-tag" {
       name       = "docker.tag"
       repository = "zepben/pipeline-java-ewb"
-      tags       = ${var.tags}
+      tags       = var.tags
     }
     post-processor "docker-push" {
       name           = "docker.push"

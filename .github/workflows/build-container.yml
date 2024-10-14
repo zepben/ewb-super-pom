@@ -69,5 +69,6 @@ jobs:
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
+          echo "Running: 'packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl'"
           packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
