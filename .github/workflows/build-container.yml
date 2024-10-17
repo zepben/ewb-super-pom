@@ -57,8 +57,17 @@ jobs:
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
           fi
 
+          if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
+            # Some label was given via remote call
+            PIPELINE_JAVA_IMAGE="-var base_image=${{ github.event.client_payload.base_image }}"
+          fi
+
+          if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
+            IMAGE_TAGS="-var tags=${{ github.event.client_payload.labels }}"
+          fi
+
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
-          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $ADDITIONAL_ARGS build-container.pkr.hcl
+          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
