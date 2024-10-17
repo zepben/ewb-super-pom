@@ -57,9 +57,9 @@ jobs:
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
           fi
 
-          if [ "z${{ github.event.client_payload.tag }}" != "z" ]; then
+          if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
             # Some label was given via remote call
-            PIPELINE_JAVA_IMAGE="-var base_image=zepben/pipeline-java:${{ github.event.client_payload.tag }}"
+            PIPELINE_JAVA_IMAGE="-var base_image=${{ github.event.client_payload.base_image }}"
           fi
 
           if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
