@@ -57,13 +57,24 @@ jobs:
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
           fi
 
+          # Handle the base image if provided
           if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
             # Some label was given via remote call
             PIPELINE_JAVA_IMAGE="-var base_image=${{ github.event.client_payload.base_image }}"
           fi
 
+          # Handle the resulting container labels if provided
           if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
-            IMAGE_TAGS="-var tags=${{ github.event.client_payload.labels }}"
+            # the labels come in as "label1,label2" but we need to provide them as
+            # '["label1", "label2"]'
+            # So we replace the original values with quoted ones and then wrap in braces
+
+            # Split the passed values by comma into an array
+            IFS=',' read -r -a array <<< ${{ github.event.client_payload.labels }}
+            # Print every array entry encased by double quotes
+            tags=$(printf "\"%s\"," "${array[@]}")
+            # Construct the list parameter for the container tags
+            IMAGE_TAGS="-var tags='[$tags]'"
           fi
 
           cd for-ci-build-image
