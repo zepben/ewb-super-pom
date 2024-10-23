@@ -66,7 +66,7 @@ jobs:
           # Handle the resulting container labels if provided
           if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
             # the labels come in as "label1 label2" but we need to provide them as
-            # '["label1", "label2"]'
+            # ["label1", "label2"]
             # So we replace the original values with quoted ones and then wrap in braces
 
             # Split the passed values into an array
@@ -74,7 +74,7 @@ jobs:
             # Print every array entry encased by double quotes
             tags=$(printf "\"%s\"," "${array[@]}")
             # Construct the list parameter for the container tags
-            IMAGE_TAGS="-var tags='[$tags]'"
+            IMAGE_TAGS="-var tags=[$tags]"
           fi
 
           cd for-ci-build-image
