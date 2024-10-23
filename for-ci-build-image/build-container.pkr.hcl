@@ -17,9 +17,19 @@ variable "dockerhub_user" {
   default = "${env("DOCKER_HUB_USER")}"
 }
 
+variable "base_image" {
+  type = string
+  default = "zepben/pipeline-java"
+}
+
+variable "tags" {
+  type = list(string)
+  default = ["latest"]
+}
+
 source "docker" "image" {
   commit = "true"
-  image  = "zepben/pipeline-java:4.5.2"
+  image  = var.base_image
 }
 
 build {
@@ -58,7 +68,7 @@ build {
     post-processor "docker-tag" {
       name       = "docker.tag"
       repository = "zepben/pipeline-java-ewb"
-      tags       = ["latest", "1.0.0"]
+      tags       = var.tags
     }
     post-processor "docker-push" {
       name           = "docker.push"

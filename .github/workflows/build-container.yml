@@ -57,8 +57,28 @@ jobs:
             ADDITIONAL_ARGS="-except docker.push,docker.tag"
           fi
 
+          # Handle the base image if provided
+          if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
+            # Some label was given via remote call
+            PIPELINE_JAVA_IMAGE="-var base_image=${{ github.event.client_payload.base_image }}"
+          fi
+
+          # Handle the resulting container labels if provided
+          if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
+            # the labels come in as "label1 label2" but we need to provide them as
+            # '["label1", "label2"]'
+            # So we replace the original values with quoted ones and then wrap in braces
+
+            # Split the passed values into an array
+            array=(${{ github.event.client_payload.labels }})
+            # Print every array entry encased by double quotes
+            tags=$(printf "\"%s\"," "${array[@]}")
+            # Construct the list parameter for the container tags
+            IMAGE_TAGS="-var tags='[$tags]'"
+          fi
+
           cd for-ci-build-image
           packer init build-container.pkr.hcl
           packer validate build-container.pkr.hcl
-          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $ADDITIONAL_ARGS build-container.pkr.hcl
+          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl
         shell: bash
