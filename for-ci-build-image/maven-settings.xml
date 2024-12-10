@@ -8,6 +8,14 @@
             <id>zepben-maven</id>
             <username>${server.username}</username>
             <password>${server.password}</password>
+            <configuration>
+                <httpHeaders>
+                  <property>
+                    <name>nexus-signature</name>
+                    <value>${nexus.signature}</value>
+                  </property>
+                </httpHeaders>
+            </configuration>
         </server>
         <server>
             <id>ossrh</id>
