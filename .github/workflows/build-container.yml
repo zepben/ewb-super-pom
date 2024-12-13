@@ -4,15 +4,48 @@ on:
   repository_dispatch:
     types: [build-container]
   workflow_dispatch:
-  push:
-    branches:
-      - "*"
-      - "!main"
-
+    inputs:
+      commit:
+        description: 'Initial commit to layer the resulting image'
+        required: true
+        type: string
+ 
 jobs:
-  build-container:
+  parse-inputs:
     runs-on: ubuntu-latest
-    container: hashicorp/packer:1.11
+    outputs:
+      commits: ${{ steps.check.outputs.commits }}
+      action_build_container: ${{ steps.check.outputs.action_build_container }}
+      base_commit: ${{ steps.check.outputs.base_commit }}
+      pipeline_java_commit: ${{ steps.check.outputs.pipeline_java_commit }}
+      pipeline_java_version: ${{ steps.check.outputs.pipeline_java_version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check inputs
+        id: check
+        run: |
+          # Check whether the commit was provided
+          if [ "z${{ inputs.commit }}" != "z" ]; then
+            # We're on some commit, so rebuild the whole thing
+            echo "commits=$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD)" >> $GITHUB_OUTPUT
+            echo "action_build_container=zepben/pipeline-java" >> $GITHUB_OUTPUT
+            echo "base_commmit=${{ inputs.commit }}" >> $GITHUB_OUTPUT
+          else
+            # We're on HEAD, so update the existing image
+            echo "commits=HEAD" >> $GITHUB_OUTPUT
+            echo "action_build_container=zepben/pipeline-java-ewb" >> $GITHUB_OUTPUT
+            echo "base_commmit=$(skopeo inspect zepben/pipeline-java-ewb | jq .Labels.base_commit)" >> $GITHUB_OUTPUT
+          fi 
+
+          # TODO: fetch both in 1 go?
+          echo "pipeline_java_commit=$(skopeo inspect zepben/pipeline-java | jq .Labels.commit)" >> $GITHUB_OUTPUT
+          echo "pipeline_java_version=$(skopeo inspect zepben/pipeline-java | jq .Labels.version)" >> $GITHUB_OUTPUT
+
+  build-repository:
+    runs-on: ubuntu-latest
+    needs: [parse-inputs]
+    container: ${{ needs.parse-inputs.outputs.action_build_container }} 
     env:
       ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY }}
       MAVEN_SETTINGS: ${{ secrets.MAVEN_SETTINGS }}
@@ -25,60 +58,117 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install deps
+      - name: Build repository
+        id: build
         run: |
-          apk add libxml2-utils docker
+          for commit in ${{ needs.parse-inputs.outputs.commits }}; do
+            git checkout $commit
+            ./maven-build.sh 
+          done 
+        shell: bash
 
-      - name: Packer Version
+      - name: Store repository for wrapping in container  
+        uses: action/upload-artefact@v4
+        id: upload
+        if: steps.build.outcome == 'success'
+        with:
+          name: /root/local_repo
+          path: /root/local_repo 
+          if-no-files-found: error
+        continue-on-error: false
+
+  build-container:
+    runs-on: ubuntu-latest
+    needs: [parse-inputs, build-repository]
+    outputs:
+      push: ${{ steps.labels.outputs.push }}
+    env:
+      DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+      LOCAL_REPO: local_repo
+      BASE_IMAGE: zepben/pipeline-java
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_ACCESS_TOKEN
+
+      - name: Download repository
+        uses: actions/download-artifact@v4
+        with:
+          name: /root/local_repo
+          path: $LOCAL_REPO
+          continue-on-error: false
+
+
+      - name: Figure out tags and labels
+        id: labels
         run: |
-          packer version
-
-      - name: Create docker container
-        run: |
-          # Scripts to copy dependencies from dependencyManagement
-          cp for-ci-build-image/deps-pom-template.xml deps-pom.xml
-          version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
-          sed -i "s/{{version}}/$version/g" deps-pom.xml
-          deps=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
-          deps=$(echo $deps | sed 's/\//\\\//g; s/ /\\n/g')
-          ln=$(cat deps-pom.xml | grep -n "<dependencies>" | cut -d':' -f1)
-          ln=$((ln + 1))
-          sed -i "$ln i $deps" deps-pom.xml
-          # Scripts to copy plugins from pluginManagement
-          plugins=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
-          plugins=$(echo $plugins | sed 's/\//\\\//g; s/ /\\n/g')
-          ln=$(cat deps-pom.xml | grep -n "<plugins>" | cut -d':' -f1)
-          ln=$((ln + 1))
-          sed -i "$ln i $plugins" deps-pom.xml
-          xmllint -format deps-pom.xml > deps-pom-new.xml
-          mv -f deps-pom-new.xml deps-pom.xml
-          ADDITIONAL_ARGS=""
-          if [[ $GITHUB_REF_NAME != "main" ]]; then
-            ADDITIONAL_ARGS="-except docker.push,docker.tag"
-          fi
-
           # Handle the base image if provided
           if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
             # Some label was given via remote call
-            PIPELINE_JAVA_IMAGE="-var base_image=${{ github.event.client_payload.base_image }}"
+            echo "BASE_IMAGE=${{ github.event.client_payload.base_image }}" >> $GITHUB_ENV
+            
+            echo ${{ github.event.client_payload.base_image }} | grep ":test"
+            if [ $? == 0 ]; then
+               echo "push=no" >> $GITHUB_OUTPUT
+            fi
           fi
 
-          # Handle the resulting container labels if provided
-          if [ "z${{ github.event.client_payload.labels }}" != "z" ]; then
-            # the labels come in as "label1 label2" but we need to provide them as
-            # ["label1", "label2"]
-            # So we replace the original values with quoted ones and then wrap in braces
-
-            # Split the passed values into an array
-            array=(${{ github.event.client_payload.labels }})
-            # Print every array entry encased by double quotes
-            tags=$(printf "\"%s\"," "${array[@]}")
-            # Construct the list parameter for the container tags
-            IMAGE_TAGS="-var tags=[$tags]"
+          REF_NAME=$GITHUB_REF_NAME
+          # TODO: Make sure labels is an array
+          SHORT_REF=$(git rev-parse --short HEAD)
+          if [[ $REF_NAME == "main" ]]; then
+            tags=(latest ${SHORT_REF}")
+          else
+            tags=(${REF_NAME} ${REF_NAME}-${SHORT_REF})
           fi
 
-          cd for-ci-build-image
-          packer init build-container.pkr.hcl
-          packer validate build-container.pkr.hcl
-          packer build -on-error=abort -var dockerhub_user=$DOCKER_HUB_USER -var dockerhub_pw=$DOCKER_HUB_ACCESS_TOKEN $PIPELINE_JAVA_IMAGE $IMAGE_TAGS $ADDITIONAL_ARGS build-container.pkr.hcl
-        shell: bash
+          # tags=$(printf "-t docker.io/zepben/pipeline-java-ewb:%s " "${tags[@]}")
+          cat Dockerfile.in | envsubst > Dockerfile
+
+      # Priority sorting determines the tag used in the OCI label
+      # The current order preferences the version, then commit, then any special tags
+      # We always push a commit based tag
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: zepben/pipeline-java-ewb
+          labels: |
+            base_commit=${{ needs.parse-inputs.outputs.base_commit }}
+            end_commit=$GITHUB_REF
+            pipeline_java_commit=${{ needs.parse-inputs.outputs.pipeline_java_commit }}
+            pipeline_java_version=${{ needs.parse-inputs.outputs.pipeline_java_version }}
+            org.opencontainers.image.vendor=Zepben
+          tags: |
+            type=raw,value=sha-${{ steps.sha.outputs.short_ref }},enable=${{ true }},priority=200
+            type=raw,value=sha-${{ steps.sha.outputs.long_ref }},enable=${{ true }},priority=220
+            type=raw,value=${{ github.event.client_payload.version }},enable=${{ github.event.client_payload.version != '' }},priority=900
+            type=raw,value=latest,enable=${{ inputs.latest_tag }},priority=100
+
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ inputs.push_image }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          file: ${{ inputs.dockerfile }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: ${{ inputs.build-args }}
+          secret-files: |
+            npm=/home/runner/.npmrc
+            maven=/home/runner/.m2/settings.xml
+            nuget=/home/runner/.nuget/NuGet/NuGet.Config
+
+
