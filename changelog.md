@@ -1,3 +1,13 @@
+## [0.36.8]
+
+### Enhancements
+- Improved container build flows
+
+## [0.36.7]
+
+### Enhancements
+- Added remote container build option
+
 ## [0.36.6]
 
 ### Enhancements
