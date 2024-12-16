@@ -12,12 +12,12 @@ on:
 jobs:
   deploy-central:
     runs-on: ubuntu-latest
-    container: zepben/pipeline-java:4.5.1
+    container: zepben/pipeline-ewb-java
     env:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Maven deploy to Central
         id: build
@@ -42,4 +42,4 @@ jobs:
         with:
           token: ${{ secrets.CI_GITHUB_TOKEN }}
           event-type: build-container
-
+          client-payload: '{"version": "${{ github.event.client_payload.version }}"}'
