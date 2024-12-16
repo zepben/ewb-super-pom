@@ -3,12 +3,25 @@ name: Build CI Container
 on:
   repository_dispatch:
     types: [build-container]
+    inputs:
+      push_image:
+        description: If the image should be pushed to the registry
+        type: boolean
+        default: true
   workflow_dispatch:
     inputs:
       commit:
         description: 'Initial commit to layer the resulting image'
         required: true
         type: string
+      push_image:
+        description: If the image should be pushed to the registry
+        type: boolean
+        default: true
+
+  # Build container on PR open and switch to ready
+  pull_request:
+    types: [opened, ready_for_review]
  
 jobs:
   parse-inputs:
@@ -17,30 +30,62 @@ jobs:
       commits: ${{ steps.check.outputs.commits }}
       action_build_container: ${{ steps.check.outputs.action_build_container }}
       base_commit: ${{ steps.check.outputs.base_commit }}
+      last_commit: ${{ steps.check.outputs.last_commit }}
+      version: ${{ steps.check.outputs.version }}
       pipeline_java_commit: ${{ steps.check.outputs.pipeline_java_commit }}
       pipeline_java_version: ${{ steps.check.outputs.pipeline_java_version }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Check inputs
+      - name: Check and parse inputs
         id: check
         run: |
           # Check whether the commit was provided
           if [ "z${{ inputs.commit }}" != "z" ]; then
-            # We're on some commit, so rebuild the whole thing
-            echo "commits=$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD)" >> $GITHUB_OUTPUT
+
+            # We're on some commit, so rebuild the whole image
+            ## find all commits to layer in the image
+            echo "commits<<EOF" >> $GITHUB_OUTPUT
+            echo "$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD)" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
+            ## detect the container to build the repository with
             echo "action_build_container=zepben/pipeline-java" >> $GITHUB_OUTPUT
+
+            ## find the first commit to start the build with
             echo "base_commmit=${{ inputs.commit }}" >> $GITHUB_OUTPUT
           else
             # We're on HEAD, so update the existing image
             echo "commits=HEAD" >> $GITHUB_OUTPUT
             echo "action_build_container=zepben/pipeline-java-ewb" >> $GITHUB_OUTPUT
-            echo "base_commmit=$(skopeo inspect zepben/pipeline-java-ewb | jq .Labels.base_commit)" >> $GITHUB_OUTPUT
-          fi 
 
-          # TODO: fetch both in 1 go?
-          echo "pipeline_java_commit=$(skopeo inspect zepben/pipeline-java | jq .Labels.commit)" >> $GITHUB_OUTPUT
-          echo "pipeline_java_version=$(skopeo inspect zepben/pipeline-java | jq .Labels.version)" >> $GITHUB_OUTPUT
+            # We don't have any base commit, so
+            # fetch it from the latest image
+            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java | jq .Labels)
+            echo "base_commit=$(echo $pipeline_java_ewb_labels | jq .base_commit)" >> $GITHUB_OUTPUT
+
+            # Figure out a version
+            if [ "z${{ github.event.client_payload.version }}" != "z" ]; then
+              # If our automated dispatch provided a version, use it
+              echo "version=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+            else
+              # Otherwise, it means we're just rebasing on a new pipeline, 
+              # so fetch it from the latest self image
+              echo "version=$(echo $pipeline_java_ewb_labels | jq .version)" >> $GITHUB_OUTPUT
+            fi 
+          fi
+
+          # basic pipeline-java labels to include in the our final container
+          pipeline_java_labels=$(skopeo inspect docker://zepben/pipeline-java | jq .Labels)
+          echo "pipeline_java_commit=$(echo $pipeline-java-labels | jq .commit)" >> $GITHUB_OUTPUT
+          echo "pipeline_java_version=$(echo $pipeline-java-labels | jq .version)" >> $GITHUB_OUTPUT
+
+          # set the last commit to whatever caused this flow to run
+          # this would be HEAD off the branch where launched
+          #   or main, if built from remote_dispatch
+          echo "last_commit=$GITHUB_SHA" >> $GITHUB_OUTPUT
 
   build-repository:
     runs-on: ubuntu-latest
@@ -55,25 +100,28 @@ jobs:
       GPG_KEY_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
       DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+      LOCAL_REPO: /maven
     steps:
       - uses: actions/checkout@v4
 
       - name: Build repository
         id: build
         run: |
-          for commit in ${{ needs.parse-inputs.outputs.commits }}; do
+          # parse commits as a list
+          commits=( ${{ needs.parse-inputs.outputs.commits }} )
+          for commit in "${commits[@]}"; do
             git checkout $commit
             ./maven-build.sh 
           done 
         shell: bash
 
       - name: Store repository for wrapping in container  
-        uses: action/upload-artefact@v4
+        uses: actions/upload-artifact@v4
         id: upload
         if: steps.build.outcome == 'success'
         with:
-          name: /root/local_repo
-          path: /root/local_repo 
+          name: repo
+          path: /maven
           if-no-files-found: error
         continue-on-error: false
 
@@ -97,42 +145,42 @@ jobs:
       - name: Login to Github Container Registry
         uses: docker/login-action@v3
         with:
-          username: $DOCKER_HUB_USER
-          password: $DOCKER_HUB_ACCESS_TOKEN
+          username: ${{ env.DOCKER_HUB_USER }}
+          password: ${{ env.DOCKER_HUB_ACCESS_TOKEN }}
+          registry: docker.io
 
       - name: Download repository
         uses: actions/download-artifact@v4
         with:
-          name: /root/local_repo
-          path: $LOCAL_REPO
-          continue-on-error: false
-
+          name: repo
+          path: ${{ env.LOCAL_REPO }}
+        continue-on-error: false
 
       - name: Figure out tags and labels
         id: labels
         run: |
-          # Handle the base image if provided
           if [ "z${{ github.event.client_payload.base_image }}" != "z" ]; then
-            # Some label was given via remote call
+            # Some base_image with label was given via a remote call, so override the env
             echo "BASE_IMAGE=${{ github.event.client_payload.base_image }}" >> $GITHUB_ENV
-            
-            echo ${{ github.event.client_payload.base_image }} | grep ":test"
-            if [ $? == 0 ]; then
-               echo "push=no" >> $GITHUB_OUTPUT
-            fi
           fi
 
-          REF_NAME=$GITHUB_REF_NAME
-          # TODO: Make sure labels is an array
-          SHORT_REF=$(git rev-parse --short HEAD)
-          if [[ $REF_NAME == "main" ]]; then
-            tags=(latest ${SHORT_REF}")
-          else
-            tags=(${REF_NAME} ${REF_NAME}-${SHORT_REF})
-          fi
-
-          # tags=$(printf "-t docker.io/zepben/pipeline-java-ewb:%s " "${tags[@]}")
+          # Create the Dockerfile
+          # Replace BASE_IMAGE and LOCAL_REPO in Dockerfile template
+          # BASE_IMAGE is set as env on the whole job and updated above if needed
+          # LOCAL_REPO is set as env on the whole job and used to download the artefact
+          cd for-ci-build-image
           cat Dockerfile.in | envsubst > Dockerfile
+
+          # Check Dockerfile
+          cat Dockerfile
+
+      - name: Get SHAs
+        id: sha
+        run: |
+          SHORT_REF=$(git rev-parse --short HEAD)
+          LONG_REF=$(git rev-parse HEAD)
+          echo "short_ref=$SHORT_REF" >> $GITHUB_OUTPUT
+          echo "long_ref=$LONG_REF" >> $GITHUB_OUTPUT
 
       # Priority sorting determines the tag used in the OCI label
       # The current order preferences the version, then commit, then any special tags
@@ -144,15 +192,17 @@ jobs:
           images: zepben/pipeline-java-ewb
           labels: |
             base_commit=${{ needs.parse-inputs.outputs.base_commit }}
-            end_commit=$GITHUB_REF
+            last_commit=${{ needs.parse-inputs.outputs.last_commit }}
             pipeline_java_commit=${{ needs.parse-inputs.outputs.pipeline_java_commit }}
             pipeline_java_version=${{ needs.parse-inputs.outputs.pipeline_java_version }}
+            version=${{ needs.parse-inputs.outputs.version }}
             org.opencontainers.image.vendor=Zepben
           tags: |
-            type=raw,value=sha-${{ steps.sha.outputs.short_ref }},enable=${{ true }},priority=200
-            type=raw,value=sha-${{ steps.sha.outputs.long_ref }},enable=${{ true }},priority=220
-            type=raw,value=${{ github.event.client_payload.version }},enable=${{ github.event.client_payload.version != '' }},priority=900
-            type=raw,value=latest,enable=${{ inputs.latest_tag }},priority=100
+            type=raw,value=${{ github.ref_name }}-${{ steps.sha.outputs.short_ref }},enable=${{ github.ref_name != 'main' }},priority=200
+            type=raw,value=${{ steps.sha.outputs.short_ref }},enable=${{ github.ref_name == 'main' }},priority=200
+            type=raw,value=${{ github.ref_name }},enable=${{ github.ref_name != 'main' }},priority=110
+            type=raw,value=${{ needs.parse-inputs.outputs.version }},enable=${{ needs.parse-inputs.outputs.version  != '' }},priority=105
+            type=raw,value=latest,enable=${{ github.ref_name == 'main' }},priority=100
 
 
       - name: Build and push
