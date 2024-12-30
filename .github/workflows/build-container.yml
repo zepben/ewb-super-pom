@@ -27,12 +27,19 @@ jobs:
   parse-inputs:
     runs-on: ubuntu-latest
     outputs:
+      # A list of commits to include in the build. Expected to be the head commit when incrementing, or the full range when rebuilding.
       commits: ${{ steps.check.outputs.commits }}
+      # The image to use for the build. Expected to be the previous image when incrementing, or the java base image when rebuilding.
       action_build_container: ${{ steps.check.outputs.action_build_container }}
+      # The first commit SHA to be included in the image (not just this HEAD run)
       base_commit: ${{ steps.check.outputs.base_commit }}
+      # The last commit SHA to be included in the image for this run
       last_commit: ${{ steps.check.outputs.last_commit }}
+      # The version label for the image if provided
       version: ${{ steps.check.outputs.version }}
+      # The commit SHA used to build the pipeline-java base image used to build this image.
       pipeline_java_commit: ${{ steps.check.outputs.pipeline_java_commit }}
+      # The version of the pipeline-java base image used to build this image.
       pipeline_java_version: ${{ steps.check.outputs.pipeline_java_version }}
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +54,11 @@ jobs:
 
             # We're on some commit, so rebuild the whole image
             ## find all commits to layer in the image
+
+            ## This is a special format of putting a multiline
+            ## string into a value inside $GITHUB_OUTPUT
+            ## It's using the heredoc format, so
+            ## that's why it's not in a standard Github's "var=value" syntax
             echo "commits<<EOF" >> $GITHUB_OUTPUT
             echo "$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD)" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
@@ -128,8 +140,6 @@ jobs:
   build-container:
     runs-on: ubuntu-latest
     needs: [parse-inputs, build-repository]
-    outputs:
-      push: ${{ steps.labels.outputs.push }}
     env:
       DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
