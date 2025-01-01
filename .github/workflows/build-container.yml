@@ -218,17 +218,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
           push: ${{ inputs.push_image }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          file: ${{ inputs.dockerfile }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: ${{ inputs.build-args }}
-          secret-files: |
-            npm=/home/runner/.npmrc
-            maven=/home/runner/.m2/settings.xml
-            nuget=/home/runner/.nuget/NuGet/NuGet.Config
-
-
