@@ -75,7 +75,7 @@ jobs:
 
             # We don't have any base commit, so
             # fetch it from the latest image
-            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java | jq .Labels)
+            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java-ewb | jq .Labels)
             echo "base_commit=$(echo $pipeline_java_ewb_labels | jq .base_commit)" >> $GITHUB_OUTPUT
 
             # Figure out a version
