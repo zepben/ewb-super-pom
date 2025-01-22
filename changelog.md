@@ -4,16 +4,6 @@
 - Update `azure-bom` property to `1.2.30` to fix workload identity authentication loop
 - Update `vertx` to `4.5.11` to fix compatiblity issue with `azure-bom` transitive `netty` dependency
 
-## [0.36.8]
-
-### Enhancements
-- Improved container build flows
-
-## [0.36.7]
-
-### Enhancements
-- Added remote container build option
-
 ## [0.36.6]
 
 ### Enhancements
