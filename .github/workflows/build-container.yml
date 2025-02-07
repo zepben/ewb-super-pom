@@ -129,7 +129,9 @@ jobs:
           commits=( ${{ needs.parse-inputs.outputs.commits }} )
           for commit in "${commits[@]}"; do
             git checkout $commit
+            cd for-ci-build-image
             ./maven-build.sh 
+            cd ..
           done 
         shell: bash
 

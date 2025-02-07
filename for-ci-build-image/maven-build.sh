@@ -3,15 +3,15 @@
 # Manipulate pom for dependencies
 cp deps-pom-template.xml deps-pom.xml
 cp ../pom.xml pom.xml
-version=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/version/text()' -)
+version=$(cat pom.xml | sed -e 's/xmlns.*=".*"//g' -e 's/xsi:.*=".*"//g'  | xmllint --xpath '/project/version/text()' -)
 sed -i "s/{{version}}/$version/g" deps-pom.xml
-deps=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
+deps=$(cat pom.xml | sed -e 's/xmlns.*=".*"//g' -e 's/xsi:.*=".*"//g' | xmllint --xpath '/project/dependencyManagement/dependencies/dependency' -)
 deps=$(echo $deps | sed 's/\//\\\//g; s/ /\\n/g')
 ln=$(cat deps-pom.xml | grep -n "<dependencies>" | cut -d':' -f1)
 ln=$((ln + 1))
 sed -i "$ln i $deps" deps-pom.xml
 # Scripts to copy plugins from pluginManagement
-plugins=$(cat pom.xml | sed 's/xmlns.*=".*"//g' | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
+plugins=$(cat pom.xml | sed -e 's/xmlns.*=".*"//g' -e 's/xsi:.*=".*"//g'  | xmllint --xpath '/project/build/pluginManagement/plugins/plugin' -)
 plugins=$(echo $plugins | sed 's/\//\\\//g; s/ /\\n/g')
 ln=$(cat deps-pom.xml | grep -n "<plugins>" | cut -d':' -f1)
 ln=$((ln + 1))
