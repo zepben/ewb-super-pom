@@ -87,8 +87,8 @@ jobs:
 
           # basic pipeline-java labels to include in the our final container
           pipeline_java_labels=$(skopeo inspect docker://zepben/pipeline-java | jq .Labels)
-          echo "pipeline_java_commit=$(echo $pipeline-java-labels | jq .commit)" >> $GITHUB_OUTPUT
-          echo "pipeline_java_version=$(echo $pipeline-java-labels | jq .version)" >> $GITHUB_OUTPUT
+          echo "pipeline_java_commit=$(echo $pipeline_java_labels | jq .commit)" >> $GITHUB_OUTPUT
+          echo "pipeline_java_version=$(echo $pipeline_java_labels | jq .version)" >> $GITHUB_OUTPUT
 
           # set the last commit to whatever caused this flow to run
           # this would be HEAD off the branch where launched
