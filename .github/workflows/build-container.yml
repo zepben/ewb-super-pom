@@ -18,10 +18,6 @@ on:
         description: If the image should be pushed to the registry
         type: boolean
         default: true
-
-  # Build container on PR open and switch to ready
-  pull_request:
-    types: [opened, ready_for_review]
  
 jobs:
   parse-inputs:
