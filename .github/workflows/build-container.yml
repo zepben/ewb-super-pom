@@ -228,7 +228,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:for-ci-build-image"
+          context: "./for-ci-build-image"
           push: ${{ inputs.push_image }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
