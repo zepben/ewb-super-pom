@@ -173,7 +173,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: repo
-          path: ${{ env.LOCAL_REPO }}/for-ci-build-image
+          path: ./for-ci-build-image
         continue-on-error: false
 
       - name: Figure out tags and labels
