@@ -173,11 +173,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: repo
-          path: ./for-ci-build-image
+          path: ./for-ci-build-image/local_repo
         continue-on-error: false
-
-      - name: Debug
-        run: ls -l for-ci-build-image
 
       - name: Figure out tags and labels
         id: labels
