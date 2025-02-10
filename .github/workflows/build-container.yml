@@ -188,7 +188,7 @@ jobs:
       - name: Get SHAs
         id: sha
         run: |
-          SHORT_REF=$(git rev-parse --short HEAD)
+          SHORT_REF=$(git rev-parse --short HEAD | tac)
           LONG_REF=$(git rev-parse HEAD)
           echo "short_ref=$SHORT_REF" >> $GITHUB_OUTPUT
           echo "long_ref=$LONG_REF" >> $GITHUB_OUTPUT
