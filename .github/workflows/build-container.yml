@@ -115,6 +115,7 @@ jobs:
           # parse commits as a list
           commits=( ${{ needs.parse-inputs.outputs.commits }} )
           for commit in "${commits[@]}"; do
+            git fetch -v
             git checkout $commit
             cd for-ci-build-image
             ./maven-build.sh 
