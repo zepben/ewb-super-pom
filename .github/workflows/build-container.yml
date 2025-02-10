@@ -33,10 +33,6 @@ jobs:
       last_commit: ${{ steps.check.outputs.last_commit }}
       # The version label for the image if provided
       version: ${{ steps.check.outputs.version }}
-      # The commit SHA used to build the pipeline-java base image used to build this image.
-      pipeline_java_commit: ${{ steps.check.outputs.pipeline_java_commit }}
-      # The version of the pipeline-java base image used to build this image.
-      pipeline_java_version: ${{ steps.check.outputs.pipeline_java_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -81,14 +77,9 @@ jobs:
             else
               # Otherwise, it means we're just rebasing on a new pipeline, 
               # so fetch it from the latest self image
-              echo "version=$(echo $pipeline_java_ewb_labels | jq -r '.version')" >> $GITHUB_OUTPUT
+              echo "version=$(echo $pipeline_java_ewb_labels | jq -r 'org.opencontainers.image.version')" >> $GITHUB_OUTPUT
             fi 
           fi
-
-          # basic pipeline-java labels to include in the our final container
-          pipeline_java_labels=$(skopeo inspect docker://zepben/pipeline-java | jq .Labels)
-          echo "pipeline_java_commit=$(echo $pipeline_java_labels | jq -r '.commit')" >> $GITHUB_OUTPUT
-          echo "pipeline_java_version=$(echo $pipeline_java_labels | jq -r '.version')" >> $GITHUB_OUTPUT
 
           # set the last commit to whatever caused this flow to run
           # this would be HEAD off the branch where launched
@@ -213,9 +204,7 @@ jobs:
           labels: |
             base_commit=${{ needs.parse-inputs.outputs.base_commit }}
             last_commit=${{ needs.parse-inputs.outputs.last_commit }}
-            pipeline_java_commit=${{ needs.parse-inputs.outputs.pipeline_java_commit }}
-            pipeline_java_version=${{ needs.parse-inputs.outputs.pipeline_java_version }}
-            version=${{ needs.parse-inputs.outputs.version }}
+            org.opencontainers.image.version=${{ needs.parse-inputs.outputs.version }}
             org.opencontainers.image.vendor=Zepben
           tags: |
             type=raw,value=${{ github.ref_name }}-${{ steps.sha.outputs.short_ref }},enable=${{ github.ref_name != 'main' }},priority=200
