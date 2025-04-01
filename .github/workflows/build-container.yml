@@ -47,13 +47,10 @@ jobs:
             # We're on some commit, so rebuild the whole image
             ## find all commits to layer in the image
 
-            ## This is a special format of putting a multiline
-            ## string into a value inside $GITHUB_OUTPUT
-            ## It's using the heredoc format, so
-            ## that's why it's not in a standard Github's "var=value" syntax
-            echo "commits<<EOF" >> $GITHUB_OUTPUT
-            echo "$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD)" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            ## We're constructing a list of commits which we turn then into a matrix execution - 
+            ## meaning that each commit is going to be handled by a different job.
+            commits=$(git rev-list --ancestry-path ${{ inputs.commit }}~1..HEAD | sed -e "s/^/\"/g" -e "s/$/\"/g" | paste -s -d,)
+            echo "commits=$(jq -cn --argjson commit $(echo "[$commits]") '{commit: $commit}')" >> $GITHUB_OUTPUT
 
             ## detect the container to build the repository with
             echo "action_build_container=zepben/pipeline-java" >> $GITHUB_OUTPUT
@@ -89,6 +86,9 @@ jobs:
   build-repository:
     runs-on: ubuntu-latest
     needs: [parse-inputs]
+    strategy:
+      fail-fast: true
+      matrix: ${{ fromJson(needs.parse-inputs.outputs.commits) }}
     container: ${{ needs.parse-inputs.outputs.action_build_container }} 
     env:
       ZEPBEN_GPG_KEY: ${{ secrets.ZEPBEN_GPG_KEY }}
@@ -102,6 +102,8 @@ jobs:
       LOCAL_REPO: /maven
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.commit }}
 
       - name: Work around git permission issue
         run: |
@@ -113,14 +115,12 @@ jobs:
         id: build
         run: |
           # parse commits as a list
-          commits=( ${{ needs.parse-inputs.outputs.commits }} )
-          for commit in "${commits[@]}"; do
-            git fetch -v
-            git checkout $commit
-            cd for-ci-build-image
-            ./maven-build.sh 
-            cd ..
-          done 
+          cd for-ci-build-image
+          ./maven-build.sh 
+          cd ..
+
+          # All artifacts have to be unique, so...
+          mv /maven maven-${{ matrix.commit }}
         shell: bash
 
       - name: Store repository for wrapping in container  
@@ -128,8 +128,8 @@ jobs:
         id: upload
         if: steps.build.outcome == 'success'
         with:
-          name: repo
-          path: /maven
+          name: maven-${{ matrix.commit }}
+          path: maven-${{ matrix.commit }}
           if-no-files-found: error
         continue-on-error: false
 
@@ -164,8 +164,9 @@ jobs:
       - name: Download repository
         uses: actions/download-artifact@v4
         with:
-          name: repo
+          pattern: maven-*
           path: ./for-ci-build-image/local_repo
+          merge-multiple: true
         continue-on-error: false
 
       - name: Figure out tags and labels
