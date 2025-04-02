@@ -59,7 +59,7 @@ jobs:
             echo "action_build_container=zepben/pipeline-java" >> $GITHUB_OUTPUT
 
             ## find the first commit to start the build with
-            echo "base_commmit=${{ inputs.commit }}" >> $GITHUB_OUTPUT
+            echo "base_commit=${{ inputs.commit }}" >> $GITHUB_OUTPUT
           else
             # We're on HEAD, so update the existing image
             echo "commits=HEAD" >> $GITHUB_OUTPUT
