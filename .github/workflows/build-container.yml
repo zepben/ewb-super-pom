@@ -117,16 +117,16 @@ jobs:
           # parse commits as a list
           commits=( ${{ needs.parse-inputs.outputs.commits }} )
           for commit in "${commits[@]}"; do
-            git fetch -v
-            git checkout $commit
-            cd for-ci-build-image
-            ./maven-build.sh 
-            cd ..
-
             # reset the repository to clear any changes
             # so that we can checkout again
             # we're already in the in-repo path, so no need to specify it
             git reset --hard $commit
+
+            # build the deps
+            cd for-ci-build-image
+            ./maven-build.sh 
+            cd ..
+
           done 
         shell: bash
 
