@@ -114,6 +114,11 @@ jobs:
       - name: Build repository
         id: build
         run: |
+          # We have just checked out the top HEAD,
+          # so save the build script separately
+          # to use for building everything
+          cp for-ci-build-image/maven-build.sh .
+
           # parse commits as a list
           commits=( ${{ needs.parse-inputs.outputs.commits }} )
           for commit in "${commits[@]}"; do
@@ -124,7 +129,7 @@ jobs:
 
             # build the deps
             cd for-ci-build-image
-            ./maven-build.sh 
+            ../maven-build.sh 
             cd ..
 
           done 
