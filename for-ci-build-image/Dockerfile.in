@@ -1,0 +1,5 @@
+FROM ${BASE_IMAGE}
+
+COPY maven-settings.xml /usr/share/maven/conf/settings.xml
+COPY ${LOCAL_REPO} /root/local_repo
+
