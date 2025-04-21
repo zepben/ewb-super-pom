@@ -12,7 +12,7 @@ on:
 jobs:
   deploy-central:
     runs-on: ubuntu-latest
-    container: zepben/pipeline-ewb-java
+    container: zepben/pipeline-java-ewb
     env:
       DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
