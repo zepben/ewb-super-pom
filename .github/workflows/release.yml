@@ -42,4 +42,4 @@ jobs:
         with:
           token: ${{ secrets.CI_GITHUB_TOKEN }}
           event-type: build-container
-          client-payload: '{"version": "${{ github.event.client_payload.version }}"}'
+          client-payload: '{ "push_image": "true" }'
