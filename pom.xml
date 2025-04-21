@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.37.0</version>
+    <version>0.38.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -84,9 +84,9 @@
         <jetbrains.exposed.version>0.38.2</jetbrains.exposed.version>
 
         <!-- protobuf options -->
-        <protobuf.version>3.24.2</protobuf.version>
+        <protobuf.version>4.30.2</protobuf.version>
         <protobuf.plugin.version>3.11.4</protobuf.plugin.version>
-        <grpc.version>1.59.1</grpc.version>
+        <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
         <kotlin.version>1.9.10</kotlin.version>
@@ -737,45 +737,6 @@
                         <languageVersion>${kotlin.language.version}</languageVersion>
                     </configuration>
                 </plugin>
-
-                <!-- Protobuf compilation -->
-                <plugin>
-                    <groupId>com.github.os72</groupId>
-                    <artifactId>protoc-jar-maven-plugin</artifactId>
-                    <version>${protobuf.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <protocVersion>${protobuf.version}</protocVersion>
-                                <addSources>true</addSources>
-                                <includeStdTypes>true</includeStdTypes>
-                                <includeDirectories>
-                                    <include>../proto</include>
-                                </includeDirectories>
-                                <inputDirectories>
-                                    <include>proto</include>
-                                    <include>../proto</include>
-                                </inputDirectories>
-                                <outputTargets>
-                                    <outputTarget>
-                                        <type>java</type>
-                                        <outputDirectory>target/generated-sources/src</outputDirectory>
-                                    </outputTarget>
-                                    <outputTarget>
-                                        <type>grpc-java</type>
-                                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}</pluginArtifact>
-                                        <outputDirectory>target/generated-sources/src</outputDirectory>
-                                    </outputTarget>
-                                </outputTargets>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
             </plugins>
         </pluginManagement>
 
