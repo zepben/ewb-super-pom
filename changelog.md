@@ -1,3 +1,9 @@
+## [0.38.0]
+
+### Enhancements
+- Updated to protobuf `4.30.2` and gRPC `1.71.0`
+- Removed protobuf compilation plugin - now handled in ewb-grpc repo only
+
 ## [0.37.0]
 
 ### Enhancements
