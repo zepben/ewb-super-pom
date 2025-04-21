@@ -12,7 +12,7 @@ on:
     inputs:
       commit:
         description: 'Initial commit to layer the resulting image'
-        required: true
+        required: false
         type: string
       push_image:
         description: If the image should be pushed to the registry
