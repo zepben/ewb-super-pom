@@ -39,7 +39,7 @@ jobs:
         shell: bash
 
       - name: Trigger release
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.CI_GITHUB_TOKEN }}
           event-type: trigger-release
