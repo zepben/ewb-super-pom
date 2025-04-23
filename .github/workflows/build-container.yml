@@ -77,7 +77,8 @@ jobs:
             else
               # Otherwise, it means we're just rebasing on a new pipeline, 
               # so fetch it from the latest self image
-              echo "version=$(echo $pipeline_java_ewb_labels | jq -r 'org.opencontainers.image.version')" >> $GITHUB_OUTPUT
+              version=$(echo $pipeline_java_ewb_labels | jq -r '."org.opencontainers.image.version"')
+              echo "version=$version" >> $GITHUB_OUTPUT
             fi 
           fi
 

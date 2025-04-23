@@ -7,7 +7,7 @@ on:
 jobs:
   check-version:
     runs-on: ubuntu-latest
-    container: zepben/pipeline-basic:5.0.0
+    container: zepben/pipeline-basic
     env:
       NEXUS_MAVEN_REPO: ${{ secrets.NEXUS_MAVEN_REPO }}
       NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
@@ -15,7 +15,7 @@ jobs:
       NEXUS_MAVEN_SNAPSHOT: ${{ secrets.NEXUS_MAVEN_SNAPSHOT }}
       NEXUS_MAVEN_RELEASE: ${{ secrets.NEXUS_MAVEN_RELEASE }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Check version doesn't already exist
         run: |
           /scripts/release-checks.sh --java --maven pom.xml
