@@ -228,7 +228,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         env:  
-          push_image: ${{ contains(null, inputs.push_image) && toJson('true') || inputs.push_image }}
+          push_image: ${{ contains(null, inputs.push_image) || inputs.push_image }}
         with:
           context: "./for-ci-build-image"
           push: ${{ env.push_image }}
