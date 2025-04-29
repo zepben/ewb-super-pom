@@ -3,11 +3,6 @@ name: Build CI Container
 on:
   repository_dispatch:
     types: [build-container]
-    inputs:
-      push_image:
-        description: If the image should be pushed to the registry
-        type: boolean
-        default: true
   workflow_dispatch:
     inputs:
       commit:
@@ -232,9 +227,11 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v6
+        env:  
+          push_image: ${{ contains(null, inputs.push_image) || inputs.push_image }}
         with:
           context: "./for-ci-build-image"
-          push: ${{ inputs.push_image }}
+          push: ${{ env.push_image }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
