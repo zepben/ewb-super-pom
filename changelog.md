@@ -1,3 +1,8 @@
+## [0.39.0]
+
+### Enhancements
+- Migrate OSSRH repository to Maven Central
+
 ## [0.38.0]
 
 ### Enhancements

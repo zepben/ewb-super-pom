@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.38.3</version>
+    <version>0.39.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -1013,8 +1013,6 @@
         <profile>
             <id>release</id>
             <build>
-                <!-- Sign artifacts with gpg. Requires gpg command to be available and creds configured in settings.xml
-See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
                 <plugins>
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
@@ -1044,6 +1042,8 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
                         </configuration>
                     </plugin>
 
+                    <!-- Sign artifacts with gpg. Requires gpg command to be available and creds configured in settings.xml
+    See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -1069,15 +1069,13 @@ See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components 
 
                     <!-- Plugin for deploying to maven central -->
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.7.0</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
+                      <groupId>org.sonatype.central</groupId>
+                      <artifactId>central-publishing-maven-plugin</artifactId>
+                      <version>0.7.0</version>
+                      <extensions>true</extensions>
+                      <configuration>
+                        <publishingServerId>maven-central</publishingServerId>
+                      </configuration>
                     </plugin>
                 </plugins>
             </build>
