@@ -1,3 +1,8 @@
+## [0.39.3]
+
+### Fixes
+- Enable auto-publish and wait until done
+
 ## [0.39.2]
 
 ### Fixes
