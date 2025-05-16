@@ -1,3 +1,8 @@
+## [0.39.1]
+
+### Fixes
+- Fix github workflows to use proper Maven Central credentials.
+
 ## [0.39.0]
 
 ### Enhancements
