@@ -31,7 +31,7 @@ jobs:
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           NEXUS_RELEASE_URL: ${{ secrets.NEXUS_MAVEN_RELEASE }}
           NEXUS_SNAPSHOT_URL: ${{ secrets.NEXUS_MAVEN_SNAPSHOT }}
-          PROFILE: ossrh
+          PROFILE: maven-central
         continue-on-error: false
 
       - name: Trigger container build

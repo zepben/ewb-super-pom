@@ -1,3 +1,8 @@
+## [0.39.2]
+
+### Fixes
+- Fix github workflows to use proper Maven Central profile.
+
 ## [0.39.1]
 
 ### Fixes
