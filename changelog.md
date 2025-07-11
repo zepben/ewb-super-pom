@@ -1,3 +1,8 @@
+## [0.39.4]
+
+### Enhancements
+- Bump `central-publishing-maven-plugin` to 0.8.0
+
 ## [0.39.3]
 
 ### Fixes
