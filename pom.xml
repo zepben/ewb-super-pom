@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.39.4</version>
+    <version>0.40.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -85,16 +85,15 @@
 
         <!-- protobuf options -->
         <protobuf.version>4.30.2</protobuf.version>
-        <protobuf.plugin.version>3.11.4</protobuf.plugin.version>
         <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>2.0.21</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin.coroutines.version>1.7.1</kotlin.coroutines.version>
+        <kotlin.coroutines.version>1.10.2</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.language.version>1.9</kotlin.language.version>
-        <kotlin.serialization.version>1.6.0</kotlin.serialization.version>
+        <kotlin.language.version>2.0</kotlin.language.version>
+        <kotlin.serialization.version>1.8.1</kotlin.serialization.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -264,7 +263,7 @@
             <dependency>
                 <groupId>com.github.ajalt.clikt</groupId>
                 <artifactId>clikt-jvm</artifactId>
-                <version>4.2.0</version>
+                <version>5.0.3</version>
             </dependency>
 
 
@@ -729,6 +728,10 @@
                                     <source>src/test/java</source>
                                     <source>src/test/kotlin</source>
                                 </sourceDirs>
+                                <args>
+                                    <!-- This fixes lambdas to spyk - relevant issue: https://github.com/mockk/mockk/issues/1313. Can be removed once fixed and upgrade of mockk -->
+                                    <arg>-Xlambdas=class</arg>
+                                </args>
                             </configuration>
                         </execution>
                     </executions>
