@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.40.0</version>
+    <version>0.41.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -834,11 +834,6 @@
                 <groupId>net.sf.ucanaccess</groupId>
                 <artifactId>ucanaccess</artifactId>
                 <version>4.0.4</version>
-            </dependency>
-            <dependency>
-                <groupId>redist.com.oracle</groupId>
-                <artifactId>ojdbc8</artifactId>
-                <version>12.2.0.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
