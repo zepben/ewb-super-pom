@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.43.0</version>
+    <version>0.44.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -432,6 +432,11 @@
             </dependency>
 
             <!-- Jackson - NOTE: DO NOT USE - PREFER KOTLINX.SERIALIZATION -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
