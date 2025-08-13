@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.42.0</version>
+    <version>0.43.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -173,14 +173,6 @@
                 <groupId>ch.qos.logback.db</groupId>
                 <artifactId>logback-classic-db</artifactId>
                 <version>1.2.11.1</version>
-            </dependency>
-
-            <!-- Kubernetes -->
-            <dependency>
-                <groupId>io.kubernetes</groupId>
-                <artifactId>client-java</artifactId>
-                <version>21.0.1</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- Kotlin -->
@@ -401,11 +393,6 @@
                 <groupId>net.sf.saxon</groupId>
                 <artifactId>Saxon-HE</artifactId>
                 <version>9.7.0-18</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.15.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-cli</groupId>
@@ -655,11 +642,6 @@
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
-                <artifactId>ktor-serialization-jackson-jvm</artifactId>
-                <version>${ktor.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.ktor</groupId>
                 <artifactId>ktor-server-caching-headers-jvm</artifactId>
                 <version>${ktor.version}</version>
             </dependency>
@@ -777,18 +759,6 @@
                 <version>21.0.1</version>
             </dependency>
 
-            <!-- Docker -->
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java</artifactId>
-                <version>3.4.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java-transport-httpclient5</artifactId>
-                <version>3.4.0</version>
-            </dependency>
-
             <!-- Temporal -->
             <dependency>
                 <groupId>io.temporal</groupId>
@@ -805,17 +775,6 @@
                 <groupId>io.temporal</groupId>
                 <artifactId>temporal-kotlin</artifactId>
                 <version>${temporal.version}</version>
-            </dependency>
-            <!-- Unfortunately, Temporal needs Jackson-->
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-kotlin</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
             </dependency>
 
             <!-- DB -->
