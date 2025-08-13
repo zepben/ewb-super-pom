@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.41.0</version>
+    <version>0.42.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -840,16 +840,7 @@
                 <artifactId>mssql-jdbc</artifactId>
                 <version>9.2.1.jre11</version>
             </dependency>
-            <!-- ################################################################################################################################## -->
-            <!-- # NOTE: This can not be imported with the current shade setup. You can use it to import and extract the DLL from the maven cache # -->
-            <!-- #       Make sure the version number matches the JDBC driver above, and the architecture of the target system.                   # -->
-            <!-- ################################################################################################################################## -->
-            <dependency>
-                <groupId>com.microsoft.sqlserver</groupId>
-                <artifactId>mssql-jdbc_auth</artifactId>
-                <version>9.2.1.x64</version>
-                <type>dll</type>
-            </dependency>
+
             <!-- DB Migration -->
             <dependency>
                 <groupId>org.liquibase</groupId>
