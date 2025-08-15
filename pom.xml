@@ -665,13 +665,11 @@
                 <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-cio-jvm</artifactId>
                 <version>${ktor.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-jvm</artifactId>
                 <version>${ktor.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
@@ -682,7 +680,6 @@
                 <groupId>io.ktor</groupId>
                 <artifactId>ktor-client-content-negotiation-jvm</artifactId>
                 <version>${ktor.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>io.ktor</groupId>
