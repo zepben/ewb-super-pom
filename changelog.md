@@ -1,3 +1,24 @@
+## [0.45.1]
+- Removed `provided` scope from Ktor dependencies
+
+## [0.45.0]
+- Added `azure-sdk-bom` dependency
+
+## [0.44.0]
+- Added `jackson-core` dependency
+
+## [0.43.0]
+- Removed duplicated libraries from 0.40.0 migration
+
+## [0.42.0]
+- Removed Microsoft SQL Server JDBC authentication driver (`com.microsoft.sqlserver.mssql-jdbc_auth`)
+
+## [0.41.0]
+- Removed Oracle JDBC Driver (`redist.com.oracle.ojdbc`)
+
+## [0.40.0]
+- Migrated miscellaneous dependencies from downstream repositories into Super POM. See diff for full breakdown
+
 ## [0.39.4]
 
 ### Enhancements
