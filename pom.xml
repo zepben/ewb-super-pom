@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   ~ Copyright 2020 Zeppelin Bend Pty Ltd
   ~
@@ -6,19 +6,22 @@
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.45.1</version>
+    <version>0.46.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Super Pom for Evolve Maven projects. Used for version management within the evolve platform.</description>
+    <description
+    >Super Pom for Evolve Maven projects. Used for version management within the evolve platform.</description>
     <url>https://github.com/zepben/evolve-super-pom/</url>
     <organization>
         <name>Zeppelin Bend Pty Ltd.</name>
@@ -60,8 +63,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/zepben/evolve-super-pom.git</connection>
-        <developerConnection>scm:git:ssh://github.com/zepben/evolve-super-pom.git</developerConnection>
+        <connection
+        >scm:git:git://github.com/zepben/evolve-super-pom.git</connection>
+        <developerConnection
+        >scm:git:ssh://github.com/zepben/evolve-super-pom.git</developerConnection>
         <url>https://github.com/zepben/evolve-super-pom/src</url>
     </scm>
 
@@ -99,8 +104,10 @@
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
         <jacoco.coverage>0.8</jacoco.coverage>
-        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
-        <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
+        <jacoco.ut.execution.data.file
+        >${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
+        <jacoco.it.execution.data.file
+        >${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
 
@@ -124,6 +131,8 @@
         <temporal.version>1.25.2</temporal.version>
 
         <jackson.version>2.18.2</jackson.version>
+
+        <opentelemetry.version>1.54.1</opentelemetry.version>
     </properties>
 
     <distributionManagement>
@@ -182,6 +191,20 @@
                 <groupId>ch.qos.logback.db</groupId>
                 <artifactId>logback-classic-db</artifactId>
                 <version>1.2.11.1</version>
+            </dependency>
+
+            <!-- OpenTelemetry -->
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId
+                >opentelemetry-instrumentation-annotations</artifactId>
+                <version>2.19.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk</artifactId>
+                <version>${opentelemetry.version}</version>
             </dependency>
 
             <!-- Kotlin -->
@@ -369,7 +392,8 @@
                 <version>${grpc.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency> <!-- necessary for Java 9+ otherwise grpc code can't compile -->
+            <dependency
+            > <!-- necessary for Java 9+ otherwise grpc code can't compile -->
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>annotations-api</artifactId>
                 <version>6.0.53</version>
@@ -1084,19 +1108,29 @@
                             </goals>
                             <configuration>
                                 <transformers>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"
+                                    >
                                         <manifestEntries>
-                                            <Main-Class>${mainClass}</Main-Class>
-                                            <Specification-Title>${project.artifactId}</Specification-Title>
-                                            <Specification-Version>${project.version}</Specification-Version>
-                                            <Implementation-Title>${project.artifactId}</Implementation-Title>
-                                            <Implementation-Version>${project.version}</Implementation-Version>
-                                            <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+                                            <Main-Class
+                                            >${mainClass}</Main-Class>
+                                            <Specification-Title
+                                            >${project.artifactId}</Specification-Title>
+                                            <Specification-Version
+                                            >${project.version}</Specification-Version>
+                                            <Implementation-Title
+                                            >${project.artifactId}</Implementation-Title>
+                                            <Implementation-Version
+                                            >${project.version}</Implementation-Version>
+                                            <Implementation-Vendor-Id
+                                            >${project.groupId}</Implementation-Vendor-Id>
                                         </manifestEntries>
                                     </transformer>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"
+                                    />
                                 </transformers>
-                                <artifactSet/>
+                                <artifactSet />
                                 <filters>
                                     <filter>
                                         <artifact>*:*</artifact>
@@ -1129,8 +1163,10 @@
                                 <sourceDirs>
                                     <source>src/main/java</source>
                                     <source>src/main/kotlin</source>
-                                    <source>target/generated-sources/annotations</source>
-                                    <source>target/generated-sources/java</source>
+                                    <source
+                                    >target/generated-sources/annotations</source>
+                                    <source
+                                    >target/generated-sources/java</source>
                                 </sourceDirs>
                             </configuration>
                         </execution>
@@ -1150,7 +1186,8 @@
                     </executions>
                     <configuration>
                         <jvmTarget>${maven.compiler.release}</jvmTarget>
-                        <languageVersion>${kotlin.language.version}</languageVersion>
+                        <languageVersion
+                        >${kotlin.language.version}</languageVersion>
                     </configuration>
                 </plugin>
             </plugins>
@@ -1178,7 +1215,8 @@
                         <!-- XXX: all Error Prone args should come in a single argument -->
                         <arg>-XDcompilePolicy=byfile</arg>
                         <arg>-Xlint:unchecked</arg>
-                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode</arg>
+                        <arg
+                        >-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode</arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
@@ -1252,7 +1290,8 @@
                         </goals>
                         <configuration>
                             <!-- Sets the path to the file which contains the execution data. -->
-                            <destFile>${jacoco.ut.execution.data.file}</destFile>
+                            <destFile
+                            >${jacoco.ut.execution.data.file}</destFile>
                             <!--
                                 Sets the name of the property containing the settings
                                 for JaCoCo runtime agent.
@@ -1272,9 +1311,11 @@
                         </goals>
                         <configuration>
                             <!-- Sets the path to the file which contains the execution data. -->
-                            <dataFile>${jacoco.ut.execution.data.file}</dataFile>
+                            <dataFile
+                            >${jacoco.ut.execution.data.file}</dataFile>
                             <!-- Sets the output directory for the code coverage report. -->
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                            <outputDirectory
+                            >${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -1284,7 +1325,8 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <dataFile>${jacoco.ut.execution.data.file}</dataFile>
+                            <dataFile
+                            >${jacoco.ut.execution.data.file}</dataFile>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>
@@ -1292,7 +1334,8 @@
                                         <limit>
                                             <counter>COMPLEXITY</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco.coverage}</minimum>
+                                            <minimum
+                                            >${jacoco.coverage}</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -1311,7 +1354,8 @@
                         </goals>
                         <configuration>
                             <!-- Sets the path to the file which contains the execution data. -->
-                            <destFile>${jacoco.it.execution.data.file}</destFile>
+                            <destFile
+                            >${jacoco.it.execution.data.file}</destFile>
                             <!--
                                 Sets the name of the property containing the settings
                                 for JaCoCo runtime agent.
@@ -1331,9 +1375,11 @@
                         </goals>
                         <configuration>
                             <!-- Sets the path to the file which contains the execution data. -->
-                            <dataFile>${jacoco.it.execution.data.file}</dataFile>
+                            <dataFile
+                            >${jacoco.it.execution.data.file}</dataFile>
                             <!-- Sets the output directory for the code coverage report. -->
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                            <outputDirectory
+                            >${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -1401,7 +1447,8 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src/main/kotlin</source>
+                                <source
+                                >${project.basedir}/src/main/kotlin</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -1413,7 +1460,8 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src/test/kotlin</source>
+                                <source
+                                >${project.basedir}/src/test/kotlin</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -1448,7 +1496,8 @@
                             <dokkaPlugins>
                                 <plugin>
                                     <groupId>org.jetbrains.dokka</groupId>
-                                    <artifactId>kotlin-as-java-plugin</artifactId>
+                                    <artifactId
+                                    >kotlin-as-java-plugin</artifactId>
                                     <version>${dokka.version}</version>
                                 </plugin>
                             </dokkaPlugins>
@@ -1473,7 +1522,8 @@
                                 </goals>
                                 <configuration>
                                     <keyname>${gpg.keyname}</keyname>
-                                    <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                                    <passphraseServerId
+                                    >${gpg.keyname}</passphraseServerId>
                                     <gpgArguments>
                                         <arg>--pinentry-mode</arg>
                                         <arg>loopback</arg>
