@@ -1,3 +1,6 @@
+## [0.46.0]
+- Added `opentelemetry-sdk` and `opentelemetry-instrumentation-annotations` dependencies
+
 ## [0.45.1]
 - Removed `provided` scope from Ktor dependencies
 

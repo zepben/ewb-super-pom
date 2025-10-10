@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.45.1</version>
+    <version>0.46.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -124,6 +124,9 @@
         <temporal.version>1.25.2</temporal.version>
 
         <jackson.version>2.18.2</jackson.version>
+
+        <opentelemetry.version>1.54.1</opentelemetry.version>
+        <opentelemetry.annotation.version>2.19.0</opentelemetry.annotation.version>
     </properties>
 
     <distributionManagement>
@@ -182,6 +185,20 @@
                 <groupId>ch.qos.logback.db</groupId>
                 <artifactId>logback-classic-db</artifactId>
                 <version>1.2.11.1</version>
+            </dependency>
+
+            <!-- OpenTelemetry -->
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId
+                >opentelemetry-instrumentation-annotations</artifactId>
+                <version>${opentelemetry.annotation.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk</artifactId>
+                <version>${opentelemetry.version}</version>
             </dependency>
 
             <!-- Kotlin -->
