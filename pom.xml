@@ -108,10 +108,10 @@
         <ktor.version>3.0.3</ktor.version>
 
         <!-- azure sdk -->
-        <azure.bom.version>1.2.30</azure.bom.version>
+        <azure.bom.version>1.3.2</azure.bom.version>
 
         <!-- aws sdk -->
-        <aws.sdk.version>2.27.21</aws.sdk.version>
+        <aws.sdk.version>2.39.5</aws.sdk.version>
 
         <dokka.version>1.9.20</dokka.version>
 
