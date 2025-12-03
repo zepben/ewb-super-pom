@@ -7,8 +7,8 @@
   ~ file, You can obtain one at https://mozilla.org/MPL/2.0/.
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zepben.maven</groupId>
@@ -725,8 +725,7 @@
                 <version>1.24.1</version>
             </dependency>
 
-            <!-- coordinate systems - not sure why we have so many different ones of these, probably
-            needs to be consolidated -->
+            <!-- coordinate systems - not sure why we have so many different ones of these, probably needs to be consolidated -->
             <dependency>
                 <groupId>mil.nga.geopackage</groupId>
                 <artifactId>geopackage-core</artifactId>
@@ -848,8 +847,7 @@
             </dependency>
 
 
-            <!--Vert.x
-            packages-->
+            <!--Vert.x packages-->
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-core</artifactId>
@@ -912,8 +910,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!--AWS
-            packages-->
+            <!--AWS packages-->
             <dependency>
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-lambda-java-core</artifactId>
@@ -1030,15 +1027,10 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--THINK
-        CAREFULLY ABOUT PUTTING DEPENDENCIES HERE. DEFINE THEM IN DEPENDENCY MANAGEMENT AND LET THE
-        INDIVIDUAL MODULE DECIDE IF IT NEEDS IT!-->
-        <!--NO
-        ZEPBEN PRODUCED LIBRARIES SHOULD BE INCLUDED HERE AS THEY SHOULD ALL BE REFERENCING THE
-        SUPER POM AND THAT WILL CREATE CYCLIC REFERENCES!-->
+        <!--THINK CAREFULLY ABOUT PUTTING DEPENDENCIES HERE. DEFINE THEM IN DEPENDENCY MANAGEMENT AND LET THE INDIVIDUAL MODULE DECIDE IF IT NEEDS IT!-->
+        <!--NO ZEPBEN PRODUCED LIBRARIES SHOULD BE INCLUDED HERE AS THEY SHOULD ALL BE REFERENCING THE SUPER POM AND THAT WILL CREATE CYCLIC REFERENCES!-->
 
-        <!--Test
-        Utils-->
+        <!--Test Utils-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -1070,8 +1062,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Add
-        coverage to all projects-->
+        <!--Add coverage to all projects-->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.agent</artifactId>
@@ -1080,12 +1071,8 @@
             <scope>test</scope>
         </dependency>
 
-        <!--THINK
-        CAREFULLY ABOUT PUTTING DEPENDENCIES HERE. DEFINE THEM IN DEPENDENCY MANAGEMENT AND LET THE
-        INDIVIDUAL MODULE DECIDE IF IT NEEDS IT!-->
-        <!--NO
-        ZEPBEN PRODUCED LIBRARIES SHOULD BE INCLUDED HERE AS THEY SHOULD ALL BE REFERENCING THE
-        SUPER POM AND THAT WILL CREATE CYCLIC REFERENCES!-->
+        <!--THINK CAREFULLY ABOUT PUTTING DEPENDENCIES HERE. DEFINE THEM IN DEPENDENCY MANAGEMENT AND LET THE INDIVIDUAL MODULE DECIDE IF IT NEEDS IT!-->
+        <!--NO ZEPBEN PRODUCED LIBRARIES SHOULD BE INCLUDED HERE AS THEY SHOULD ALL BE REFERENCING THE SUPER POM AND THAT WILL CREATE CYCLIC REFERENCES!-->
     </dependencies>
 
     <build>
@@ -1111,8 +1098,7 @@
                             </goals>
                             <configuration>
                                 <transformers>
-                                    <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                         <manifestEntries>
                                             <Main-Class>${mainClass}</Main-Class>
                                             <Specification-Title>${project.artifactId}</Specification-Title>
@@ -1122,10 +1108,9 @@
                                             <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
                                         </manifestEntries>
                                     </transformer>
-                                    <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 </transformers>
-                                <artifactSet />
+                                <artifactSet/>
                                 <filters>
                                     <filter>
                                         <artifact>*:*</artifact>
@@ -1175,6 +1160,10 @@
                                     <source>src/test/kotlin</source>
                                 </sourceDirs>
                                 <args>
+                                    <!--
+                                        This generates anonymous classes for lambdas like in Kotlin 1.9
+                                        This is to allow lambda's to be spyk/mockk without putting annotations everywhere
+                                    -->
                                     <arg>-Xlambdas=class</arg>
                                 </args>
                             </configuration>
@@ -1189,9 +1178,7 @@
         </pluginManagement>
 
         <plugins>
-            <!--THINK
-            CAREFULLY ABOUT PUTTING PLUGINS HERE. YOU WILL LIKELY WANT IT IN THE PLUGIN MANAGEMENT
-            SECTION!-->
+            <!--THINK CAREFULLY ABOUT PUTTING PLUGINS HERE. YOU WILL LIKELY WANT IT IN THE PLUGIN MANAGEMENT SECTION!-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -1213,18 +1200,7 @@
                         <arg>-XDcompilePolicy=byfile</arg>
                         <arg>-Xlint:unchecked</arg>
                         <arg>--should-stop=ifError=FLOW</arg>
-                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
-                            -J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
-                            -J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
-                            -J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
-
+                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode</arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
@@ -1241,8 +1217,7 @@
                 </configuration>
             </plugin>
 
-            <!-- This plugin enforces that release version projects do not have any dependencies
-            that are snapshots -->
+            <!-- This plugin enforces that release version projects do not have any dependencies that are snapshots -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -1393,11 +1368,7 @@
                 <version>3.0.0-M3</version>
                 <configuration>
                     <!-- Sets the VM argument line used when unit tests are run. -->
-                    <!-- add-opens flags are to allow mocking of Java final private fields -->
-                    <argLine>
-                        ${surefireArgLine} -Dfile.encoding=UTF-8
-                    </argLine>
-
+                    <argLine>${surefireArgLine} -Dfile.encoding=UTF-8</argLine>
                     <!-- Skips unit tests if the value of skip.unit.tests property is true -->
                     <skipTests>${skip.unit.tests}</skipTests>
                     <!-- Excludes integration tests when unit tests are run. -->
@@ -1443,8 +1414,7 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <!-- Add "src/main/kotlin" as additional source directory, so that
-                        jacoco-maven-plugin
+                        <!-- Add "src/main/kotlin" as additional source directory, so that jacoco-maven-plugin
                         (or other plugins that care about sources) will look for files in it -->
                         <id>add-source</id>
                         <phase>generate-sources</phase>
@@ -1473,9 +1443,7 @@
             </plugin>
 
 
-            <!--THINK
-            CAREFULLY ABOUT PUTTING PLUGINS HERE. YOU WILL LIKELY WANT IT IN THE PLUGIN MANAGEMENT
-            SECTION!-->
+            <!--THINK CAREFULLY ABOUT PUTTING PLUGINS HERE. YOU WILL LIKELY WANT IT IN THE PLUGIN MANAGEMENT SECTION!-->
         </plugins>
 
     </build>
@@ -1512,8 +1480,7 @@
                         </configuration>
                     </plugin>
 
-                    <!-- Sign artifacts with gpg. Requires gpg command to be available and creds
-                    configured in settings.xml
+                    <!-- Sign artifacts with gpg. Requires gpg command to be available and creds configured in settings.xml
     See: https://central.sonatype.org/pages/apache-maven.html#gpg-signed-components -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -1540,14 +1507,14 @@
 
                     <!-- Plugin for deploying to maven central -->
                     <plugin>
-                        <groupId>org.sonatype.central</groupId>
-                        <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.8.0</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <publishingServerId>maven-central</publishingServerId>
-                            <autoPublish>true</autoPublish>
-                        </configuration>
+                      <groupId>org.sonatype.central</groupId>
+                      <artifactId>central-publishing-maven-plugin</artifactId>
+                      <version>0.8.0</version>
+                      <extensions>true</extensions>
+                      <configuration>
+                        <publishingServerId>maven-central</publishingServerId>
+                        <autoPublish>true</autoPublish>
+                      </configuration>
                     </plugin>
                 </plugins>
             </build>
