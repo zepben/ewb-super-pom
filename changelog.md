@@ -1,3 +1,19 @@
+## [0.47.0]
+- Super POM now requires JVM 17
+- Upgrade AWS SDK to `2.39.5`
+- Upgrade Azure SDK to `1.3.2`
+- Update all Kotlin dependencies to 2.1
+  - coroutines to 1.10
+  - serialization to 1.19.0
+  - io to 0.8.2
+- Upgrade `mockito` to `5.20.0` and `mockito-kotlin` to `6.1.0`
+- `mockito-inline` was renamed to `mockito-core`
+- Rename `mockk` to `mockk-jvm` and upgrade to `1.14.3`
+- Remove `kotlin-stdlib-common` and `kotlin-stdlin-jdk8` as these have been merged into `kotlin-stdlib` and are no longer necessary
+- Upgrade `maven-compiler-plugin` to `3.14.a` and `error_prone_core` to `2.42.0`
+- Add argument `-Xlambdas=class` in tests to continue support using `mockk` on lambdas. See <https://youtrack.jetbrains.com/issue/KTLC-10/Generate-all-Kotlin-lambdas-via-invokedynamic-LambdaMetafactory-by-default> for more information.
+- Upgrade kotlinx.datetime to `0.7.1-0.6.x-compat`
+
 ## [0.46.1]
 - Bump `org.testcontainers` dependencies to `1.21.4`, which supports Docker API version 1.44.
 
