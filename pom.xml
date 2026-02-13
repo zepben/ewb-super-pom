@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.46.0</version>
+    <version>0.46.1</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -127,6 +127,8 @@
 
         <opentelemetry.version>1.54.1</opentelemetry.version>
         <opentelemetry.annotation.version>2.19.0</opentelemetry.annotation.version>
+
+        <testcontainers.version>1.21.4</testcontainers.version>
     </properties>
 
     <distributionManagement>
@@ -1003,14 +1005,20 @@
             <!-- Test containers -->
             <dependency>
                 <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>1.19.7</version>
+                <version>${testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>rabbitmq</artifactId>
-                <version>1.21.0</version>
+                <version>${testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
