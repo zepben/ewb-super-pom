@@ -1,3 +1,6 @@
+## [0.46.1]
+- Bump `org.testcontainers` dependencies to `1.21.4`, which supports Docker API version 1.44.
+
 ## [0.46.0]
 - Added `opentelemetry-sdk` and `opentelemetry-instrumentation-annotations` dependencies
 
