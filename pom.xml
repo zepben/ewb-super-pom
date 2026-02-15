@@ -89,12 +89,12 @@
         <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>2.1.20</kotlin.version>
+        <kotlin.version>2.3.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.coroutines.version>1.10.2</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.language.version>2.1</kotlin.language.version>
-        <kotlin.serialization.version>1.9.0</kotlin.serialization.version>
+        <kotlin.language.version>2.3</kotlin.language.version>
+        <kotlin.serialization.version>1.10.0</kotlin.serialization.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -236,7 +236,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-datetime-jvm</artifactId>
-                <version>0.7.1-0.6.x-compat</version>
+                <version>0.7.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
