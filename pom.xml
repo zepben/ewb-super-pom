@@ -121,6 +121,7 @@
 
         <hadoop.version>3.4.2</hadoop.version>
         <parquet.version>1.17.0</parquet.version>
+        <avro.version>2.10.0</avro.version>
 
         <temporal.version>1.25.2</temporal.version>
 
@@ -506,12 +507,12 @@
             <dependency>
                 <groupId>org.apache.parquet</groupId>
                 <artifactId>parquet-avro</artifactId>
-                <version>${parquen.version}</version>
+                <version>${parquet.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.avro-kotlin.avro4k</groupId>
                 <artifactId>avro4k-core</artifactId>
-                <version>1.10.0</version>
+                <version>${avro.version}</version>
             </dependency>
 
             <!-- Hadoop -->
