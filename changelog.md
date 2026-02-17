@@ -13,6 +13,7 @@
 - Upgrade `maven-compiler-plugin` to `3.14.a` and `error_prone_core` to `2.42.0`
 - Add argument `-Xlambdas=class` in tests to continue support using `mockk` on lambdas. See <https://youtrack.jetbrains.com/issue/KTLC-10/Generate-all-Kotlin-lambdas-via-invokedynamic-LambdaMetafactory-by-default> for more information.
 - Upgrade kotlinx.datetime to `0.7.1`
+- Upgrade hadoop dependencies to `3.4.2`
 
 ## [0.46.1]
 - Bump `org.testcontainers` dependencies to `1.21.4`, which supports Docker API version 1.44.

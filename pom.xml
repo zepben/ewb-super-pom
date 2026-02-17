@@ -119,7 +119,7 @@
 
         <sis.version>1.0</sis.version>
 
-        <hadoop.version>3.4.1</hadoop.version>
+        <hadoop.version>3.4.2</hadoop.version>
 
         <temporal.version>1.25.2</temporal.version>
 
