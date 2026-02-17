@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.46.1</version>
+    <version>0.47.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -76,8 +76,8 @@
         <vertx.version>4.5.11</vertx.version>
 
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
-        <mockito.version>3.12.4</mockito.version>
-        <mockito.kotlin.version>3.2.0</mockito.kotlin.version>
+        <mockito.version>5.20.0</mockito.version>
+        <mockito.kotlin.version>6.1.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
         <graphql-java.version>21.3</graphql-java.version>
         <graphql-kotlin.version>6.5.6</graphql-kotlin.version>
@@ -89,12 +89,12 @@
         <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>2.3.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin.coroutines.version>1.7.1</kotlin.coroutines.version>
+        <kotlin.coroutines.version>1.10.2</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.language.version>1.9</kotlin.language.version>
-        <kotlin.serialization.version>1.6.0</kotlin.serialization.version>
+        <kotlin.language.version>2.3</kotlin.language.version>
+        <kotlin.serialization.version>1.10.0</kotlin.serialization.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -108,10 +108,10 @@
         <ktor.version>3.0.3</ktor.version>
 
         <!-- azure sdk -->
-        <azure.bom.version>1.2.30</azure.bom.version>
+        <azure.bom.version>1.3.2</azure.bom.version>
 
         <!-- aws sdk -->
-        <aws.sdk.version>2.27.21</aws.sdk.version>
+        <aws.sdk.version>2.39.5</aws.sdk.version>
 
         <dokka.version>1.9.20</dokka.version>
 
@@ -119,7 +119,9 @@
 
         <sis.version>1.0</sis.version>
 
-        <hadoop.version>3.4.1</hadoop.version>
+        <hadoop.version>3.4.2</hadoop.version>
+        <parquet.version>1.17.0</parquet.version>
+        <avro.version>2.10.0</avro.version>
 
         <temporal.version>1.25.2</temporal.version>
 
@@ -192,8 +194,7 @@
             <!-- OpenTelemetry -->
             <dependency>
                 <groupId>io.opentelemetry.instrumentation</groupId>
-                <artifactId
-                >opentelemetry-instrumentation-annotations</artifactId>
+                <artifactId>opentelemetry-instrumentation-annotations</artifactId>
                 <version>${opentelemetry.annotation.version}</version>
             </dependency>
 
@@ -206,17 +207,7 @@
             <!-- Kotlin -->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib</artifactId>
-                <version>${kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-common</artifactId>
                 <version>${kotlin.version}</version>
             </dependency>
             <dependency>
@@ -232,7 +223,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-core-jvm</artifactId>
-                <version>0.6.0</version>
+                <version>0.8.2</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
@@ -247,7 +238,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-datetime-jvm</artifactId>
-                <version>0.6.1</version>
+                <version>0.7.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -263,7 +254,7 @@
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
-                <artifactId>mockito-inline</artifactId>
+                <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -511,17 +502,17 @@
             <dependency>
                 <groupId>org.apache.parquet</groupId>
                 <artifactId>parquet-common</artifactId>
-                <version>1.13.0</version>
+                <version>${parquet.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.parquet</groupId>
                 <artifactId>parquet-avro</artifactId>
-                <version>1.13.0</version>
+                <version>${parquet.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.avro-kotlin.avro4k</groupId>
                 <artifactId>avro4k-core</artifactId>
-                <version>1.10.0</version>
+                <version>${avro.version}</version>
             </dependency>
 
             <!-- Hadoop -->
@@ -616,8 +607,8 @@
             </dependency>
             <dependency>
                 <groupId>io.mockk</groupId>
-                <artifactId>mockk</artifactId>
-                <version>1.12.4</version>
+                <artifactId>mockk-jvm</artifactId>
+                <version>1.14.9</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -1170,6 +1161,13 @@
                                     <source>src/test/java</source>
                                     <source>src/test/kotlin</source>
                                 </sourceDirs>
+                                <args>
+                                    <!--
+                                        This generates anonymous classes for lambdas like in Kotlin 1.9
+                                        This is to allow lambda's to be spyk/mockk without putting annotations everywhere
+                                    -->
+                                    <arg>-Xlambdas=class</arg>
+                                </args>
                             </configuration>
                         </execution>
                     </executions>
@@ -1195,7 +1193,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.14.1</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
 
@@ -1203,13 +1201,14 @@
                         <!-- XXX: all Error Prone args should come in a single argument -->
                         <arg>-XDcompilePolicy=byfile</arg>
                         <arg>-Xlint:unchecked</arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
                         <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode</arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.3.4</version>
+                            <version>2.42.0</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>
                             <groupId>com.google.auto.value</groupId>
