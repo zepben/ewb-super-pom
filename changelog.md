@@ -14,6 +14,7 @@
 - Add argument `-Xlambdas=class` in tests to continue support using `mockk` on lambdas. See <https://youtrack.jetbrains.com/issue/KTLC-10/Generate-all-Kotlin-lambdas-via-invokedynamic-LambdaMetafactory-by-default> for more information.
 - Upgrade kotlinx.datetime to `0.7.1`
 - Upgrade hadoop dependencies to `3.4.2`
+- Upgrade parquet dependencies to `1.17.0`
 
 ## [0.46.1]
 - Bump `org.testcontainers` dependencies to `1.21.4`, which supports Docker API version 1.44.
