@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.46.1</version>
+    <version>0.46.2</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -127,6 +127,7 @@
 
         <opentelemetry.version>1.54.1</opentelemetry.version>
         <opentelemetry.annotation.version>2.19.0</opentelemetry.annotation.version>
+        <opentelemetry.testing.version>1.56.0</opentelemetry.testing.version>
 
         <testcontainers.version>1.21.4</testcontainers.version>
     </properties>
@@ -201,6 +202,13 @@
                 <groupId>io.opentelemetry</groupId>
                 <artifactId>opentelemetry-sdk</artifactId>
                 <version>${opentelemetry.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk-testing</artifactId>
+                <version>${opentelemetry.testing.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- Kotlin -->
