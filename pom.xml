@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.46.2</version>
+    <version>0.47.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -89,7 +89,7 @@
         <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>1.9.24</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.coroutines.version>1.7.1</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
