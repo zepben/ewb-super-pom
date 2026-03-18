@@ -1,3 +1,7 @@
+## [0.47.0]
+
+- Updated Kotlin from `1.9.10` -> `1.9.24`.
+
 ## [0.46.2]
 - Added `opentelemetry-sdk-testing` test dependency
 
