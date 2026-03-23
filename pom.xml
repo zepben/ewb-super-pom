@@ -1169,13 +1169,6 @@
                                     <source>src/test/java</source>
                                     <source>src/test/kotlin</source>
                                 </sourceDirs>
-                                <args>
-                                    <!--
-                                        This generates anonymous classes for lambdas like in Kotlin 1.9
-                                        This is to allow lambda's to be spyk/mockk without putting annotations everywhere
-                                    -->
-                                    <arg>-Xlambdas=class</arg>
-                                </args>
                             </configuration>
                         </execution>
                     </executions>
