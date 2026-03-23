@@ -89,7 +89,7 @@
         <grpc.version>1.71.0</grpc.version>
 
         <!-- Kotlin options -->
-        <kotlin.version>2.3.10</kotlin.version>
+        <kotlin.version>2.3.20</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.coroutines.version>1.10.2</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
@@ -108,10 +108,10 @@
         <ktor.version>3.0.3</ktor.version>
 
         <!-- azure sdk -->
-        <azure.bom.version>1.3.2</azure.bom.version>
+        <azure.bom.version>1.3.5</azure.bom.version>
 
         <!-- aws sdk -->
-        <aws.sdk.version>2.39.5</aws.sdk.version>
+        <aws.sdk.version>2.42.18</aws.sdk.version>
 
         <dokka.version>1.9.20</dokka.version>
 
