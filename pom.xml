@@ -76,8 +76,8 @@
         <vertx.version>4.5.11</vertx.version>
 
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
-        <mockito.version>5.20.0</mockito.version>
-        <mockito.kotlin.version>6.1.0</mockito.kotlin.version>
+        <mockito.version>5.23.0</mockito.version>
+        <mockito.kotlin.version>6.3.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
         <graphql-java.version>21.3</graphql-java.version>
         <graphql-kotlin.version>6.5.6</graphql-kotlin.version>
@@ -95,6 +95,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.language.version>2.3</kotlin.language.version>
         <kotlin.serialization.version>1.10.0</kotlin.serialization.version>
+        <kotlin.io.version>0.9.0</kotlin.io.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -231,7 +232,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-io-core-jvm</artifactId>
-                <version>0.8.2</version>
+                <version>${kotlin.io.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
