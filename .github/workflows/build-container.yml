@@ -58,7 +58,7 @@ jobs:
           else
             # We're on HEAD, so update the existing image
             echo "commits=HEAD" >> $GITHUB_OUTPUT
-            echo "action_build_container=zepben/pipeline-java-ewb >> $GITHUB_OUTPUT
+            echo "action_build_container=zepben/pipeline-java-ewb" >> $GITHUB_OUTPUT
 
             # We don't have any base commit, so
             # fetch it from the latest image
