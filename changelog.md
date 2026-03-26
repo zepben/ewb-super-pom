@@ -1,5 +1,5 @@
 ## [0.48.0]
-- Super POM now requires JVM 17
+- Super POM now requires JVM 17, therefore projects that use this version will need JVM 17 to compile
 - Upgrade AWS SDK to `2.42.18`
 - Upgrade Azure SDK to `1.3.5`
 - Update all Kotlin dependencies to 2.3.20
