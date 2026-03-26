@@ -58,11 +58,11 @@ jobs:
           else
             # We're on HEAD, so update the existing image
             echo "commits=HEAD" >> $GITHUB_OUTPUT
-            echo "action_build_container=zepben/pipeline-java-ewb:17-latest" >> $GITHUB_OUTPUT
+            echo "action_build_container=zepben/pipeline-java-ewb >> $GITHUB_OUTPUT
 
             # We don't have any base commit, so
             # fetch it from the latest image
-            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java-ewb:17-latest | jq .Labels)
+            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java-ewb | jq .Labels)
             echo "base_commit=$(echo $pipeline_java_ewb_labels | jq -r '.base_commit')" >> $GITHUB_OUTPUT
 
             # Figure out a version
@@ -211,7 +211,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: zepben/pipeline-java-ewb:17-latest
+          images: zepben/pipeline-java-ewb
           labels: |
             base_commit=${{ needs.parse-inputs.outputs.base_commit }}
             last_commit=${{ needs.parse-inputs.outputs.last_commit }}
