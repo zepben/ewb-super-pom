@@ -29,7 +29,7 @@ jobs:
       # The version label for the image if provided
       version: ${{ steps.check.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -58,11 +58,11 @@ jobs:
           else
             # We're on HEAD, so update the existing image
             echo "commits=HEAD" >> $GITHUB_OUTPUT
-            echo "action_build_container=zepben/pipeline-java-ewb" >> $GITHUB_OUTPUT
+            echo "action_build_container=zepben/pipeline-java-ewb:17-latest" >> $GITHUB_OUTPUT
 
             # We don't have any base commit, so
             # fetch it from the latest image
-            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java-ewb | jq .Labels)
+            pipeline_java_ewb_labels=$(skopeo inspect docker://zepben/pipeline-java-ewb:17-latest | jq .Labels)
             echo "base_commit=$(echo $pipeline_java_ewb_labels | jq -r '.base_commit')" >> $GITHUB_OUTPUT
 
             # Figure out a version
@@ -97,7 +97,7 @@ jobs:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       LOCAL_REPO: /maven
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -153,7 +153,7 @@ jobs:
       BASE_IMAGE: zepben/pipeline-java
     steps:
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Work around git permission issue
         run: |
