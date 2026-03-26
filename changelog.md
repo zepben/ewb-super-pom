@@ -1,5 +1,22 @@
-## [0.47.0]
+## [0.48.0]
+- Super POM now requires JVM 17, therefore projects that use this version will need JVM 17 to compile
+- Upgrade AWS SDK to `2.42.18`
+- Upgrade Azure SDK to `1.3.5`
+- Update all Kotlin dependencies to 2.3.20
+  - coroutines to 1.10
+  - serialization to 1.19.0
+  - io to 0.9.0
+- Upgrade `mockito` to `5.23.0` and `mockito-kotlin` to `6.3.0`
+- `mockito-inline` was renamed to `mockito-core`
+- Rename `mockk` to `mockk-jvm` and upgrade to `1.14.9`
+- Remove `kotlin-stdlib-common` and `kotlin-stdlin-jdk8` as these have been merged into `kotlin-stdlib` and are no longer necessary
+- Upgrade `maven-compiler-plugin` to `3.14.1` and `error_prone_core` to `2.42.0`
+- Upgrade kotlinx.datetime to `0.7.1`
+- Upgrade hadoop dependencies to `3.4.2`
+- Upgrade parquet dependencies to `1.17.0`
+- Upgrade Avro to `2.10.0`
 
+## [0.47.0]
 - Updated Kotlin from `1.9.10` -> `1.9.24`.
 
 ## [0.46.2]
