@@ -96,6 +96,7 @@
         <kotlin.language.version>2.3</kotlin.language.version>
         <kotlin.serialization.version>1.10.0</kotlin.serialization.version>
         <kotlin.io.version>0.9.0</kotlin.io.version>
+        <kotlin.datetime.version>0.7.1</kotlin.datetime.version>
 
         <!-- jacoco options -->
         <jacoco.version>0.8.7</jacoco.version>
@@ -247,7 +248,7 @@
             <dependency>
                 <groupId>org.jetbrains.kotlinx</groupId>
                 <artifactId>kotlinx-datetime-jvm</artifactId>
-                <version>0.7.1</version>
+                <version>${kotlin.datetime.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
