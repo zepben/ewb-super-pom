@@ -1,3 +1,8 @@
+## [0.49.0]
+- Upgrade Kubernetes client to `26.0.0` in order to support Kubernetes 1.35
+- Added slack api dependency
+- Added azure resourcemanager dependency
+
 ## [0.48.0]
 - Super POM now requires JVM 17, therefore projects that use this version will need JVM 17 to compile
 - Upgrade AWS SDK to `2.42.18`
