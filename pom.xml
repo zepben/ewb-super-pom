@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.48.0</version>
+    <version>0.49.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -135,6 +135,9 @@
         <opentelemetry.testing.version>1.56.0</opentelemetry.testing.version>
 
         <testcontainers.version>1.21.4</testcontainers.version>
+
+        <!-- Kubernetes API -->
+        <kubernetes.client.version>26.0.0</kubernetes.client.version>
     </properties>
 
     <distributionManagement>
@@ -802,7 +805,7 @@
             <dependency>
                 <groupId>io.kubernetes</groupId>
                 <artifactId>client-java</artifactId>
-                <version>21.0.1</version>
+                <version>${kubernetes.client.version}</version>
             </dependency>
 
             <!-- Temporal -->

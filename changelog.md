@@ -1,4 +1,5 @@
 ## [0.49.0]
+- Upgrade Kubernetes client to `26.0.0` in order to support Kubernetes 1.35
 - Added slack api dependency
 - Added azure resourcemanager dependency
 
