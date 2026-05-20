@@ -1,3 +1,6 @@
+## [0.50.0]
+- Added `org.apache.ssh` api dependency
+
 ## [0.49.0]
 - Upgrade Kubernetes client to `26.0.0` in order to support Kubernetes 1.35
 - Added slack api dependency
