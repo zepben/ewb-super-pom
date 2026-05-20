@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.49.0</version>
+    <version>0.50.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -135,6 +135,9 @@
         <opentelemetry.testing.version>1.56.0</opentelemetry.testing.version>
 
         <testcontainers.version>1.21.4</testcontainers.version>
+
+        <!-- SSHD -->
+        <apache.sshd.version>2.17.1</apache.sshd.version>
 
         <!-- Kubernetes API -->
         <kubernetes.client.version>26.0.0</kubernetes.client.version>
@@ -358,6 +361,19 @@
                 <groupId>com.slack.api</groupId>
                 <artifactId>slack-api-client</artifactId>
                 <version>1.48.0</version>
+            </dependency>
+
+            <!-- SSH -->
+            <dependency>
+                <groupId>org.apache.sshd</groupId>
+                <artifactId>sshd-core</artifactId>
+                <version>${apache.sshd.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.sshd</groupId>
+                <artifactId>sshd-scp</artifactId>
+                <version>${apache.sshd.version}</version>
             </dependency>
 
 
