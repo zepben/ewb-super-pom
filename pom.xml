@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.50.0</version>
+    <version>0.51.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -73,14 +73,14 @@
 
         <autovalue.version>1.7</autovalue.version>
         <slf4j.version>2.0.9</slf4j.version>
-        <vertx.version>4.5.11</vertx.version>
+        <vertx.version>5.1.5</vertx.version>
 
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <mockito.version>5.23.0</mockito.version>
         <mockito.kotlin.version>6.3.0</mockito.kotlin.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <graphql-java.version>21.3</graphql-java.version>
-        <graphql-kotlin.version>6.5.6</graphql-kotlin.version>
+        <graphql-java.scalars-version>24.0</graphql-java.scalars-version>
+        <graphql-kotlin.version>10.1.2</graphql-kotlin.version>
         <jetbrains.exposed.version>0.48.0</jetbrains.exposed.version>
 
         <!-- protobuf options -->
@@ -323,13 +323,8 @@
             </dependency>
             <dependency>
                 <groupId>com.graphql-java</groupId>
-                <artifactId>graphql-java</artifactId>
-                <version>${graphql-java.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.graphql-java</groupId>
                 <artifactId>graphql-java-extended-scalars</artifactId>
-                <version>19.0</version>
+                <version>${graphql-java.scalars-version}</version>
             </dependency>
 
             <!-- RabbitMQ -->
@@ -947,6 +942,11 @@
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-auth-common</artifactId>
+                <version>${vertx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-web-graphql</artifactId>
                 <version>${vertx.version}</version>
             </dependency>
             <dependency>

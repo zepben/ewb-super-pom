@@ -1,3 +1,12 @@
+## [0.51.0]
+
+- Upgrade `vertx` to `5.1.5`, also adding `vertx-web-graphql`.
+- Upgrade `graphql-kotlin-schema-generator` and `graphql-kotlin-server` to `10.1.2`.
+- Removed explicit import of `graphql-java`. We will now use the transitive version from
+  `graphql-kotlin-schema-generator` to ensure they are in sync.
+- Upgrade `graphql-java-extended-scalars` to `24.0`, the closest version to `graphql-java` from
+  `graphql-kotlin-schema-generator`.
+
 ## [0.50.0]
 - Added `org.apache.ssh` api dependency
 
