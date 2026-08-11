@@ -1,3 +1,6 @@
+## [0.52.0]
+- Add a new plugin `git-commit-id-maven-plugin` to optionally include git information inside jar.
+
 ## [0.51.0]
 
 - Upgrade `vertx` to `5.1.5`, also adding `vertx-web-graphql`.

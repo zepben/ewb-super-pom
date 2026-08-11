@@ -14,7 +14,7 @@
     <groupId>com.zepben.maven</groupId>
     <artifactId>evolve-super-pom</artifactId>
     <!-- Version should not be set to snapshot as CI expects finalized version -->
-    <version>0.51.0</version>
+    <version>0.52.0</version>
 
     <packaging>pom</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
@@ -74,6 +74,8 @@
         <autovalue.version>1.7</autovalue.version>
         <slf4j.version>2.0.9</slf4j.version>
         <vertx.version>5.1.5</vertx.version>
+
+        <git.commit.id.version>9.2.0</git.commit.id.version>
 
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <mockito.version>5.23.0</mockito.version>
@@ -1132,6 +1134,25 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
+                    <version>${git.commit.id.version}</version>
+                    <executions>
+                        <execution>
+                            <id>get-the-git-infos</id>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <generateGitPropertiesFile>${add.git.info}</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                        <commitIdGenerationMode>full</commitIdGenerationMode>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
