@@ -5,11 +5,6 @@
     <localRepository>/maven</localRepository>
     <servers>
         <server>
-            <id>zepben-maven-dev</id>
-            <username>${dev-server.username}</username>
-            <password>${dev-server.password}</password>
-        </server>
-        <server>
             <id>zepben-maven</id>
             <username>${server.username}</username>
             <password>${server.password}</password>
@@ -39,42 +34,6 @@
                 <gpg.keyname>${gpg.key}</gpg.keyname>
                 <gpg.executable>gpg</gpg.executable>
             </properties>
-        </profile>
-        <profile>
-            <id>zepben-maven-dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <dev.releases.url>${dev-server.release.url}</dev.releases.url>
-                <dev.snapshots.url>${dev-server.snapshot.url}</dev.snapshots.url>
-            </properties>
-            <repositories>
-                <repository>
-                    <id>zepben-maven-dev</id>
-                    <url>${dev-server.repo.url}</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>zepben-maven-dev</id>
-                    <url>${dev-server.repo.url}</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                    </snapshots>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
         <profile>
             <id>zepben-maven</id>
