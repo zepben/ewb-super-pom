@@ -1,3 +1,9 @@
+## [0.54.0]
+- Remove the maven profile for dev-nexus (added in 0.53.0) as no longer needed.
+
+## [0.53.0]
+- Add a new maven profile for dev-nexus server
+
 ## [0.52.0]
 - Add a new plugin `git-commit-id-maven-plugin` to optionally include git information inside jar.
 
