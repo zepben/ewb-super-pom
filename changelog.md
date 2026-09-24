@@ -1,3 +1,8 @@
+## [0.55.0]
+- Upgrade `jts-core` to `1.20.0`.
+- Added `jts.version` property so JTS modules are kept in sync with `jts-core`.
+- Added `jts-io-common` to `dependencyManagement`, using `jts.version`.
+
 ## [0.54.0]
 - Remove the maven profile for dev-nexus (added in 0.53.0) as no longer needed.
 
