@@ -1,3 +1,6 @@
+## [0.56.0]
+- Updated `sqlite-jdbc` to `3.53.4.0`, fixing a performance regression in table creation.
+
 ## [0.55.0]
 - Upgrade `jts-core` to `1.20.0`.
 - Added `jts.version` property so JTS modules are kept in sync with `jts-core`.
